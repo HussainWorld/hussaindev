@@ -8,10 +8,16 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const distPath = path.join(__dirname, "dist");
 
-app.use(express.static(distPath));
+// Serve static assets
+app.use(express.static(distPath, {
+  maxAge: "1h",
+  etag: true,
+}));
 
-// SPA fallback
-app.get("*", (_, res) => {
+app.get("/*", (req, res) => {
+  if (req.method !== "GET" || !req.accepts("html")) {
+    return res.status(404).end();
+  }
   res.sendFile(path.join(distPath, "index.html"));
 });
 
