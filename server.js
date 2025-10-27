@@ -14,12 +14,14 @@ app.use(express.static(distPath, {
   etag: true,
 }));
 
-app.get("/*", (req, res) => {
+app.use((req, res, next) => {
   if (req.method !== "GET" || !req.accepts("html")) {
-    return res.status(404).end();
+    return next();
   }
   res.sendFile(path.join(distPath, "index.html"));
 });
+
+app.use((req, res) => res.status(404).end());
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server listening on ${port}`));
