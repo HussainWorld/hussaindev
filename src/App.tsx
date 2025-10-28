@@ -6,7 +6,7 @@ function App() {
     <>
       <h1>Hi, I’m Hussain 👋🏻</h1>
       <div className="card">
-        <p>Welcome to my protfolio website</p>
+        <p>Welcome to my portfolio website</p>
       </div>
     </>
   )
