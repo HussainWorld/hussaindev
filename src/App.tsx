@@ -1,14 +1,22 @@
 import './App.css'
+import IPhoneMockup from './components/IPhoneMockup'
+import PortfolioPage from './components/PortfolioPage'
 
 function App() {
-
   return (
-    <>
-      <h1>Hi, I’m Hussain 👋🏻</h1>
-      <div className="card">
-        <p>Welcome to my portfolio website</p>
+    <main className="hero">
+      <div className="intro">
+        <p className="eyebrow">Hello, I am</p>
+        <h1>Hussain</h1>
+        <p className="lede">Software Engineer</p>
       </div>
-    </>
+
+      <div className="device">
+        <IPhoneMockup>
+          <PortfolioPage />
+        </IPhoneMockup>
+      </div>
+    </main>
   )
 }
 
