@@ -8,7 +8,7 @@ function App() {
       <div className="intro">
         <p className="eyebrow">Hello, I am</p>
         <h1>Hussain</h1>
-        <p className="lede">Software Engineer</p>
+        <p className="lede">Software Engineer | Mobile App Developer</p>
       </div>
 
       <div className="device">

@@ -8,7 +8,7 @@ function PortfolioPage() {
   const [activeTab, setActiveTab] = useState<NavTab>('home')
 
   const handleTabChange = (tab: NavTab) => {
-    setActiveTab(tab === 'about' ? 'about' : 'home')
+    setActiveTab(tab)
   }
 
   return (

@@ -1,3 +1,5 @@
+import { IoBriefcase, IoHome, IoMail, IoPerson } from 'react-icons/io5'
+
 export type NavTab = 'home' | 'projects' | 'about' | 'contact'
 
 interface NavBarProps {
@@ -14,7 +16,7 @@ function NavBar({ activeTab, onTabChange }: NavBarProps) {
         aria-current={activeTab === 'home' ? 'page' : undefined}
         onClick={() => onTabChange('home')}
       >
-        <span className="tab-icon">🏠</span>
+        <IoHome className="tab-icon" aria-hidden="true" />
         <span className="tab-label">Home</span>
       </button>
       <button
@@ -23,7 +25,7 @@ function NavBar({ activeTab, onTabChange }: NavBarProps) {
         aria-current={activeTab === 'projects' ? 'page' : undefined}
         onClick={() => onTabChange('projects')}
       >
-        <span className="tab-icon">🗂️</span>
+        <IoBriefcase className="tab-icon" aria-hidden="true" />
         <span className="tab-label">Projects</span>
       </button>
       <button
@@ -32,7 +34,7 @@ function NavBar({ activeTab, onTabChange }: NavBarProps) {
         aria-current={activeTab === 'about' ? 'page' : undefined}
         onClick={() => onTabChange('about')}
       >
-        <span className="tab-icon">👤</span>
+        <IoPerson className="tab-icon" aria-hidden="true" />
         <span className="tab-label">About</span>
       </button>
       <button
@@ -41,7 +43,7 @@ function NavBar({ activeTab, onTabChange }: NavBarProps) {
         aria-current={activeTab === 'contact' ? 'page' : undefined}
         onClick={() => onTabChange('contact')}
       >
-        <span className="tab-icon">✉️</span>
+        <IoMail className="tab-icon" aria-hidden="true" />
         <span className="tab-label">Contact</span>
       </button>
     </nav>
