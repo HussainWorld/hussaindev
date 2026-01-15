@@ -1,11 +1,17 @@
+import reboot01MobileApp from '../../assets/reboot01MobileApp.png'
+
+export type ProjectId = 'reboot01-mobile-app' | 'portfolio-experience'
+
 export type Project = {
-  id: string
+  id: ProjectId
   tag: string
   title: string
   summary: string
   stack: string
   description: string
   outcomes: string[]
+  image?: string
+  imageAlt?: string
 }
 
 export const projects: Project[] = [
@@ -21,6 +27,8 @@ export const projects: Project[] = [
       'Building core flows with a production-ready data layer.',
       'Integrating Go middleware services for backend reliability.',
     ],
+    image: reboot01MobileApp,
+    imageAlt: 'Reboot01 mobile app screenshot',
   },
   {
     id: 'portfolio-experience',
@@ -36,6 +44,3 @@ export const projects: Project[] = [
     ],
   },
 ]
-
-export const getProjectById = (id: string) =>
-  projects.find((project) => project.id === id)

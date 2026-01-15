@@ -7,6 +7,7 @@ import {
 } from 'react-icons/io5'
 import React from 'react';
 import { useForm, ValidationError } from '@formspree/react';
+import cvPdf from '../../assets/Hussain Nader - Software Engineer - CV.pdf';
 
 function ContactPage() {
   const [state, handleSubmit, reset] = useForm("xpqqzgzv");
@@ -123,6 +124,11 @@ function ContactPage() {
           Share a brief about your project, timeline, and goals. Use the form or email me
           directly.
         </p>
+        <div className="contact-actions">
+          <a className="contact-download" href={cvPdf} download="Hussain-Nader-CV.pdf">
+            Download CV
+          </a>
+        </div>
       </header>
 
       <div className="contact-methods">

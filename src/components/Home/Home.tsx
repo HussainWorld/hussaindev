@@ -11,10 +11,11 @@ function Home() {
         </div> */}
         {/* <h1 className="profile-name">Hussain Nader</h1> */}
         {/* <p className="profile-title">Full-Stack & Mobile Developer</p> */}
-        <h1 className="profile-name">Full-Stack & Mobile Developer</h1>
+        {/* <h1 className="profile-name">Full-Stack & Mobile Developer</h1> */}
+        <p className="profile-kicker">Home</p>
         <p className="profile-bio">
-          I build fast, polished web and mobile products with React, React Native, TypeScript,
-          Node.js, and Go. Focused on clean UX, reliable systems, and shipping with intent.
+          I build and deploy, web and mobile products with React, React Native, TypeScript,
+          Node.js, and Go.
         </p>
       </div>
 

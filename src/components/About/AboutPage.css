@@ -91,6 +91,23 @@
   gap: 6px;
 }
 
+.about-timeline-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 4px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .about-timeline-role {
   margin: 0;
   font-size: 15px;

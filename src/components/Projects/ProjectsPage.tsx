@@ -1,8 +1,8 @@
 import './ProjectsPage.css'
-import { projects } from './projectsData'
+import { projects, type ProjectId } from './projectsData'
 
 type ProjectsPageProps = {
-  onSelectProject: (projectId: string) => void
+  onSelectProject: (projectId: ProjectId) => void
 }
 
 function ProjectsPage({ onSelectProject }: ProjectsPageProps) {
@@ -24,20 +24,32 @@ function ProjectsPage({ onSelectProject }: ProjectsPageProps) {
             className="project-card"
             onClick={() => onSelectProject(project.id)}
           >
-            <p className="project-tag">{project.tag}</p>
-            <h2 className="project-title">{project.title}</h2>
-            <p className="project-body">{project.summary}</p>
-            <div className="project-meta">
-              <span className="project-stack-label">Stack</span>
-              <p className="project-stack">{project.stack}</p>
+            {project.image ? (
+              <div className="project-media">
+                <img
+                  src={project.image}
+                  alt={project.imageAlt ?? `${project.title} screenshot`}
+                  loading="lazy"
+                  className="project-image"
+                />
+              </div>
+            ) : null}
+            <div className="project-content">
+              <p className="project-tag">{project.tag}</p>
+              <h2 className="project-title">{project.title}</h2>
+              <p className="project-body">{project.summary}</p>
+              <div className="project-meta">
+                <span className="project-stack-label">Stack</span>
+                <p className="project-stack">{project.stack}</p>
+              </div>
             </div>
           </button>
         ))}
       </div>
 
-      <div className="projects-note">
+      {/* <div className="projects-note">
         Want more case studies? See the Contact page to reach me.
-      </div>
+      </div> */}
     </section>
   )
 }

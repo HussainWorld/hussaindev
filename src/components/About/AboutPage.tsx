@@ -1,5 +1,8 @@
 import './AboutPage.css'
 // import pfp from '../../assets/mePFP.png'
+import bahrainPolytechnicLogo from '../../assets/BahrainPolytechnicLogo.png'
+import generalAssemblyLogo from '../../assets/generalAssemblyLogo.svg'
+import reboot01Logo from '../../assets/reboot01Logo.png'
 
 function AboutPage() {
   return (
@@ -35,7 +38,14 @@ function AboutPage() {
         <h2 className="about-section-title">Education</h2>
         <ol className="about-timeline">
           <li className="about-timeline-item">
-            <p className="about-timeline-role">Bahrain Polytechnic</p>
+            <div className="about-timeline-heading">
+              <img
+                src={bahrainPolytechnicLogo}
+                alt="Bahrain Polytechnic logo"
+                className="about-logo"
+              />
+              <p className="about-timeline-role">Bahrain Polytechnic</p>
+            </div>
             <p className="about-timeline-body">
               Bachelor Degree in Programming
             </p>
@@ -43,16 +53,28 @@ function AboutPage() {
           </li>
 
           <li className="about-timeline-item">
-            <p className="about-timeline-role">Reboot01 – Full Stack Developer Program (Current)</p>
+            <div className="about-timeline-heading">
+              <img src={reboot01Logo} alt="Reboot01 logo" className="about-logo" />
+              <p className="about-timeline-role">
+                Reboot01 - Full Stack Developer Program (Current)
+              </p>
+            </div>
             <p className="about-timeline-body">
               Project-based full-stack program focused on real-world web and mobile development.
             </p>
           </li>
 
           <li className="about-timeline-item">
-            <p className="about-timeline-role">
-              General Assembly - Software Engineering Immersive Bootcamp
-            </p>
+            <div className="about-timeline-heading">
+              <img
+                src={generalAssemblyLogo}
+                alt="General Assembly logo"
+                className="about-logo"
+              />
+              <p className="about-timeline-role">
+                General Assembly - <tr/> Software Engineering Bootcamp
+              </p>
+            </div>
             <p className="about-timeline-body">
               Completed intensive full stack training with team-based delivery and production
               workflows.

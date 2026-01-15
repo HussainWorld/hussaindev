@@ -1,6 +1,6 @@
 .contact-page {
   display: grid;
-  gap: 22px;
+  gap: 8px;
   color: var(--text);
   position: relative;
 }
@@ -82,6 +82,35 @@
   line-height: 1.6;
   color: var(--muted);
   max-width: 36ch;
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.contact-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.contact-download:hover {
+  opacity: 0.92;
+}
+
+.contact-download:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .contact-methods {
