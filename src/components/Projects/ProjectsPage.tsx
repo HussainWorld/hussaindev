@@ -1,0 +1,45 @@
+import './ProjectsPage.css'
+import { projects } from './projectsData'
+
+type ProjectsPageProps = {
+  onSelectProject: (projectId: string) => void
+}
+
+function ProjectsPage({ onSelectProject }: ProjectsPageProps) {
+  return (
+    <section className="projects-page">
+      <header className="projects-header">
+        <p className="projects-kicker">Projects</p>
+        <h1 className="projects-title">Selected Work</h1>
+        <p className="projects-subtitle">
+          A few highlights that show how I build products from idea to delivery.
+        </p>
+      </header>
+
+      <div className="projects-grid">
+        {projects.map((project) => (
+          <button
+            key={project.id}
+            type="button"
+            className="project-card"
+            onClick={() => onSelectProject(project.id)}
+          >
+            <p className="project-tag">{project.tag}</p>
+            <h2 className="project-title">{project.title}</h2>
+            <p className="project-body">{project.summary}</p>
+            <div className="project-meta">
+              <span className="project-stack-label">Stack</span>
+              <p className="project-stack">{project.stack}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      <div className="projects-note">
+        Want more case studies? See the Contact page to reach me.
+      </div>
+    </section>
+  )
+}
+
+export default ProjectsPage

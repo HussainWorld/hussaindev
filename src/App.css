@@ -24,6 +24,17 @@
   padding-right: 9rem;
 }
 
+.intro-avatar {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+  align-self: flex-start;
+}
+
 .eyebrow {
   margin: 0;
   color: #000000;
@@ -84,6 +95,12 @@ h1 {
     justify-self: center;
     padding-right: 0;
     text-align: center;
+  }
+
+  .intro-avatar {
+    width: 180px;
+    height: 180px;
+    align-self: center;
   }
 
   .device {

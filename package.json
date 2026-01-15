@@ -14,6 +14,7 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
+    "@formspree/react": "^3.0.0",
     "compression": "^1.8.1",
     "express": "^5.1.0",
     "react": "^19.1.1",

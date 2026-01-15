@@ -76,6 +76,82 @@
   color: var(--muted);
 }
 
+.about-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.about-timeline-item {
+  border-left: 2px solid var(--border);
+  padding-left: 14px;
+  display: grid;
+  gap: 6px;
+}
+
+.about-timeline-role {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.about-timeline-body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.about-timeline-meta {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.about-projects {
+  display: grid;
+  gap: 12px;
+}
+
+.about-project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  display: grid;
+  gap: 6px;
+}
+
+.about-project-kicker {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.about-project-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.about-project-body,
+.about-project-outcome {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
 .about-skill-row {
   display: grid;
   grid-template-columns: minmax(0, 110px) 1fr;
