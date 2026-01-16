@@ -12,16 +12,16 @@ function AboutPage() {
           <img src={pfp} alt="Hussain Nader" className="about-avatar-img" />
         </div> */}
         <p className="about-kicker">About</p>
-        {/* <h1 className="about-title">Hussain Nader</h1> */}
-        <p className="about-subtitle">Programming | Software Engineer</p>
+        <h1 className="about-title">Hussain Nader</h1>
+        <p className="about-subtitle">Software Engineer | Mobile App Developer</p>
       </header>
 
       <div className="about-section">
         <h2 className="about-section-title">Professional Summary</h2>
         <p className="about-section-body">
           Full stack and mobile developer with hands-on experience building modern applications
-          using React, React Native, TypeScript, Node.js, Go, and GraphQL. I enjoy translating
-          product goals into reliable, <tr/> user-friendly experiences.
+          using React, React Native, TypeScript, Node.js, Go, and GraphQL. <tr/> I enjoy translating
+          product goals into reliable, user-friendly experiences.
         </p>
       </div>
 

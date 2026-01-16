@@ -128,6 +128,15 @@
   background: var(--surface);
 }
 
+.contact-card--download {
+  border-color: rgba(125, 211, 252, 0.45);
+  background: linear-gradient(
+    135deg,
+    rgba(125, 211, 252, 0.18),
+    rgba(15, 23, 42, 0.6)
+  );
+}
+
 .contact-card-icon {
   width: 40px;
   height: 40px;
@@ -156,6 +165,12 @@
   font-weight: 600;
 }
 
+.contact-card-meta {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(226, 232, 240, 0.8);
+}
+
 .contact-card-link {
   margin: 0;
   font-size: 14px;
@@ -167,6 +182,36 @@
 
 .contact-card-link:hover {
   color: var(--primary-strong);
+}
+
+.contact-card-action {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 211, 252, 0.4);
+  background: rgba(125, 211, 252, 0.18);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.contact-card-action:hover {
+  background: rgba(125, 211, 252, 0.28);
+  border-color: rgba(125, 211, 252, 0.55);
+  transform: translateY(-1px);
+}
+
+.contact-card-action:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .contact-form-wrap {

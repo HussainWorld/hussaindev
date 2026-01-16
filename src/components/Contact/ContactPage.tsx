@@ -1,6 +1,8 @@
 import './ContactPage.css'
 import {
   IoChatboxEllipsesOutline,
+  IoDocumentTextOutline,
+  IoDownloadOutline,
   IoLogoGithub,
   IoLogoLinkedin,
   IoMailOutline,
@@ -124,14 +126,30 @@ function ContactPage() {
           Share a brief about your project, timeline, and goals. Use the form or email me
           directly.
         </p>
-        <div className="contact-actions">
-          <a className="contact-download" href={cvPdf} download="Hussain-Nader-CV.pdf">
-            Download CV
-          </a>
-        </div>
       </header>
 
       <div className="contact-methods">
+
+
+        <div className="contact-card contact-card--download">
+          <div className="contact-card-icon">
+            <IoDocumentTextOutline aria-hidden="true" />
+          </div>
+          <div className="contact-card-body">
+            <p className="contact-card-label">CV</p>
+            <p className="contact-card-meta">PDF resume</p>
+          </div>
+          <a
+            className="contact-card-action"
+            href={cvPdf}
+            download="Hussain-Nader-CV.pdf"
+          >
+            <IoDownloadOutline aria-hidden="true" />
+            Download
+          </a>
+        </div>
+
+
         <div className="contact-card">
           <div className="contact-card-icon">
             <IoChatboxEllipsesOutline aria-hidden="true" />
