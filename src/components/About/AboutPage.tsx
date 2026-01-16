@@ -56,12 +56,13 @@ function AboutPage() {
             <div className="about-timeline-heading">
               <img src={reboot01Logo} alt="Reboot01 logo" className="about-logo" />
               <p className="about-timeline-role">
-                Reboot01 - Full Stack Developer Program (Current)
+                Reboot01 <tr/> Full Stack Developer Program
               </p>
             </div>
             <p className="about-timeline-body">
-              Project-based full-stack program focused on real-world web and mobile development.
+              Project-based full-stack program focused on real-world projects.
             </p>
+            <p className="about-timeline-meta">Expected Aug 2025 - Aug 2027</p>
           </li>
 
           <li className="about-timeline-item">
@@ -72,7 +73,7 @@ function AboutPage() {
                 className="about-logo"
               />
               <p className="about-timeline-role">
-                General Assembly - <tr/> Software Engineering Bootcamp
+                General Assembly <tr/> Software Engineering Bootcamp
               </p>
             </div>
             <p className="about-timeline-body">
@@ -111,30 +112,30 @@ function AboutPage() {
       <div className="about-section">
         <h2 className="about-section-title">Technical Skills</h2>
         <div className="about-skill-row">
-          <p className="about-skill-label">Frontend</p>
-          <p className="about-skill-value">React, TypeScript, Vite</p>
+          <p className="about-skill-label">Languages</p>
+          <p className="about-skill-value">JavaScript, TypeScript, Python, Java, C#, Go</p>
         </div>
         <div className="about-skill-row">
-          <p className="about-skill-label">Mobile</p>
+          <p className="about-skill-label">Frontend</p>
+          <p className="about-skill-value">React, TypeScript, Vite, Bootstrap, Tailwind CSS</p>
+        </div>
+        <div className="about-skill-row">
+          <p className="about-skill-label">Mobile Development</p>
           <p className="about-skill-value">React Native, Expo</p>
         </div>
         <div className="about-skill-row">
-          <p className="about-skill-label">Backend</p>
-          <p className="about-skill-value">Node.js, Express.js, Go, .NET</p>
+          <p className="about-skill-label">Backend & Frameworks</p>
+          <p className="about-skill-value">Node.js, Express.js, Go, Django, .NET</p>
         </div>
         <div className="about-skill-row">
           <p className="about-skill-label">APIs</p>
-          <p className="about-skill-value">REST APIs, GraphQL APIs</p>
-        </div>
-        <div className="about-skill-row">
-          <p className="about-skill-label">Data</p>
           <p className="about-skill-value">
-            PostgreSQL, SQL Server, MySQL, MongoDB, Supabase, Firebase
+            REST APIs, GraphQL APIs
           </p>
         </div>
         <div className="about-skill-row">
-          <p className="about-skill-label">Languages</p>
-          <p className="about-skill-value">JavaScript, TypeScript, Python, Java, C#, Go</p>
+          <p className="about-skill-label">Databases & Data</p>
+          <p className="about-skill-value">PostgreSQL, SQL Server, MySQL, MongoDB, Supabase, Firebase</p>
         </div>
       </div>
 
@@ -165,9 +166,9 @@ function AboutPage() {
         <h2 className="about-section-title">Awards</h2>
         <ul className="about-list">
           <li>
-            Bahrain National Team - 3rd Place, Arab Cross Country Running Championship (2023)
+            Bahrain National Team - 🥉 3rd Place <tr/> Arab Cross Country Running Championship 2023 (Egypt)
           </li>
-          <li>Batelco Night Duathlon - 1st Place (Team), 2nd Place (Individual) - 2023</li>
+          <li>Batelco Night Duathlon Race 2023 <tr/> 🥇 1st Place (Team)<tr/> 🥈 2nd Place (Individual)</li>
         </ul>
       </div>
     </section>
