@@ -1,15 +1,47 @@
-import { useEffect, useId, useState } from 'react'
+import { type PointerEvent, useEffect, useId, useRef, useState } from 'react'
 import './Reboot01ProjectDetail.css'
 import reboot01MobileApp from '../../../../assets/reboot01MobileApp.png'
 import reboot01Logo from '../../../../assets/reboot01Logo.png'
+
+type ScreenshotModule = {
+  default: string
+}
+
+const screenshotModules = import.meta.glob(
+  '../../../../assets/MobileAppScreenShots/*.{png,jpg,jpeg,webp,avif}',
+  { eager: true }
+) as Record<string, ScreenshotModule>
+
+const getScreenshotOrder = (path: string) => {
+  const match = path.match(/(\d+(?:\.\d+)?)/)
+  return match ? Number.parseFloat(match[1]) : Number.POSITIVE_INFINITY
+}
+
+const screenshotSources = Object.entries(screenshotModules)
+  .sort(([pathA], [pathB]) => {
+    const orderA = getScreenshotOrder(pathA)
+    const orderB = getScreenshotOrder(pathB)
+
+    if (orderA !== orderB) {
+      return orderA - orderB
+    }
+
+    return pathA.localeCompare(pathB)
+  })
+  .map(([, module]) => module.default)
 
 type Reboot01ProjectDetailProps = {
   onBack: () => void
 }
 
 function Reboot01ProjectDetail({ onBack }: Reboot01ProjectDetailProps) {
+  const previewImages = screenshotSources.length > 0 ? screenshotSources : [reboot01MobileApp]
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
   const lightboxId = useId()
+  const dragStartRef = useRef<{ x: number; y: number } | null>(null)
 
   useEffect(() => {
     if (!isPreviewOpen) {
@@ -19,6 +51,9 @@ function Reboot01ProjectDetail({ onBack }: Reboot01ProjectDetailProps) {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsPreviewOpen(false)
+        setDragOffset(0)
+        setIsDragging(false)
+        dragStartRef.current = null
       }
     }
 
@@ -31,6 +66,82 @@ function Reboot01ProjectDetail({ onBack }: Reboot01ProjectDetailProps) {
       document.body.style.overflow = previousOverflow
     }
   }, [isPreviewOpen])
+
+  const handlePreviewOpen = () => {
+    setActiveIndex(0)
+    setIsPreviewOpen(true)
+  }
+
+  const closePreview = () => {
+    setIsPreviewOpen(false)
+    setDragOffset(0)
+    setIsDragging(false)
+    dragStartRef.current = null
+  }
+
+  const handleCarouselPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) {
+      return
+    }
+
+    event.currentTarget.setPointerCapture(event.pointerId)
+    dragStartRef.current = { x: event.clientX, y: event.clientY }
+    setIsDragging(true)
+    setDragOffset(0)
+  }
+
+  const handleCarouselPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (!dragStartRef.current) {
+      return
+    }
+
+    const deltaX = event.clientX - dragStartRef.current.x
+    const deltaY = event.clientY - dragStartRef.current.y
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      setDragOffset(deltaX)
+    }
+  }
+
+  const handleCarouselPointerEnd = (event: PointerEvent<HTMLDivElement>) => {
+    if (!dragStartRef.current) {
+      return
+    }
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+
+    const deltaX = event.clientX - dragStartRef.current.x
+    const deltaY = event.clientY - dragStartRef.current.y
+
+    dragStartRef.current = null
+    setIsDragging(false)
+
+    const swipeThreshold = 50
+    const tapThreshold = 10
+
+    if (Math.abs(deltaX) > swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX < 0) {
+        setActiveIndex((prev) => (prev + 1) % previewImages.length)
+      } else {
+        setActiveIndex((prev) => (prev - 1 + previewImages.length) % previewImages.length)
+      }
+    } else if (Math.abs(deltaX) < tapThreshold && Math.abs(deltaY) < tapThreshold) {
+      closePreview()
+    }
+
+    setDragOffset(0)
+  }
+
+  const handleCarouselPointerCancel = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+    dragStartRef.current = null
+    setIsDragging(false)
+    setDragOffset(0)
+  }
 
   return (
     <section className="project-detail reboot01-detail">
@@ -52,14 +163,14 @@ function Reboot01ProjectDetail({ onBack }: Reboot01ProjectDetailProps) {
         <button
           type="button"
           className="project-detail-image-button"
-          onClick={() => setIsPreviewOpen(true)}
+          onClick={handlePreviewOpen}
           aria-haspopup="dialog"
           aria-expanded={isPreviewOpen}
           aria-controls={lightboxId}
-          aria-label="View the Reboot01 mobile app screenshot full screen"
+          aria-label="View the Reboot01 mobile app screenshots full screen"
         >
           <img
-            src={reboot01MobileApp}
+            src={previewImages[0]}
             alt="Reboot01 mobile app screenshot"
             className="project-detail-image"
           />
@@ -74,16 +185,57 @@ function Reboot01ProjectDetail({ onBack }: Reboot01ProjectDetailProps) {
           className="project-detail-lightbox"
           role="dialog"
           aria-modal="true"
-          aria-label="Reboot01 mobile app screenshot full screen"
-          onClick={() => setIsPreviewOpen(false)}
+          aria-label="Reboot01 mobile app screenshots full screen"
+          onClick={closePreview}
         >
-          <img
-            src={reboot01MobileApp}
-            alt="Reboot01 mobile app screenshot"
-            className="project-detail-lightbox-image"
-          />
+          <div
+            className="project-detail-lightbox-carousel"
+            onPointerDown={handleCarouselPointerDown}
+            onPointerMove={handleCarouselPointerMove}
+            onPointerUp={handleCarouselPointerEnd}
+            onPointerCancel={handleCarouselPointerCancel}
+            onClick={(event) => event.stopPropagation()}
+            aria-label="Reboot01 mobile app screenshots"
+          >
+            <div
+              className={`project-detail-lightbox-track${isDragging ? ' is-dragging' : ''}`}
+              style={{
+                transform: `translateX(calc(${-activeIndex * 100}% + ${dragOffset}px))`,
+              }}
+            >
+              {previewImages.map((image, index) => (
+                <div className="project-detail-lightbox-slide" key={image}>
+                  <img
+                    src={image}
+                    alt={`Reboot01 mobile app screenshot ${index + 1} of ${
+                      previewImages.length
+                    }`}
+                    className="project-detail-lightbox-image"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            className="project-detail-lightbox-pagination"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="project-detail-lightbox-dots" aria-hidden="true">
+              {previewImages.map((image, index) => (
+                <span
+                  className={`project-detail-lightbox-dot${
+                    index === activeIndex ? ' is-active' : ''
+                  }`}
+                  key={image}
+                />
+              ))}
+            </div>
+            <span className="project-detail-lightbox-count">
+              {activeIndex + 1} / {previewImages.length}
+            </span>
+          </div>
           <p className="project-detail-lightbox-hint" aria-hidden="true">
-            Tap anywhere to close
+            Swipe to view more. Tap to close.
           </p>
         </div>
       ) : null}
@@ -122,7 +274,7 @@ function Reboot01ProjectDetail({ onBack }: Reboot01ProjectDetailProps) {
           <li>Audits tracking with overdue, pending, and completed filters.</li>
           <li>Projects list and detail pages with requirements and deadlines.</li>
           <li>Timeline views (calendar + vertical) with dynamic due dates.</li>
-          <li>Notifications for audits, deadlines, and campus events.</li>
+          <li>Push notifications for audits, deadlines, and campus events.</li>
           <li>Attendance tracking integrated with the campus fingerprint check-in system.</li>
           <li>Skills and profile pages showing milestones, levels, and student info.</li>
         </ul>

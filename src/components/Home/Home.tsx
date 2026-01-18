@@ -14,8 +14,7 @@ function Home() {
         {/* <h1 className="profile-name">Full-Stack & Mobile Developer</h1> */}
         <p className="profile-kicker">Home</p>
         <p className="profile-bio">
-          I build and deploy, web and mobile products with React, React Native, TypeScript,
-          Node.js, and Go.
+          I build and deploy web and mobile products with React, React Native, TypeScript, building scalable backend systems and RESTful APIs using Node.js and Go.
         </p>
       </div>
 
@@ -33,21 +32,19 @@ function Home() {
           <article className="highlight-card">
             <h3 className="highlight-title">Mobile Apps</h3>
             <p className="highlight-body">
-              React Native + Expo experiences with smooth UX, offline-friendly flows, and
-              performance tuning.
+              React Native + Expo applications with smooth UX and solid performance.
             </p>
           </article>
           <article className="highlight-card">
             <h3 className="highlight-title">Web Platforms</h3>
             <p className="highlight-body">
-              Modern React apps with clean architecture, responsive UI, and accessibility in
-              mind.
+              Modern React apps with responsive UI.
             </p>
           </article>
           <article className="highlight-card">
             <h3 className="highlight-title">APIs & Data</h3>
             <p className="highlight-body">
-              Node.js and Go services, REST/GraphQL APIs, and scalable data layers.
+              Node.js and Go services, REST/GraphQL APIs.
             </p>
           </article>
         </div>

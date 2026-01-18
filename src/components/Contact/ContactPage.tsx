@@ -123,8 +123,7 @@ function ContactPage() {
         <p className="contact-kicker">Contact</p>
         <h1 className="contact-title">Let's talk about your next build.</h1>
         <p className="contact-subtitle">
-          Share a brief about your project, timeline, and goals. Use the form or email me
-          directly.
+          Use the form or email me directly.
         </p>
       </header>
 
@@ -269,7 +268,7 @@ function ContactPage() {
             <textarea
               name="message"
               rows={4}
-              placeholder="Tell me about your goals, timeline, and any must-haves."
+              placeholder="Tell me about your goals, timeline."
             />
             <ValidationError
               prefix='Message'

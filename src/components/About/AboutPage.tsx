@@ -77,8 +77,8 @@ function AboutPage() {
               </p>
             </div>
             <p className="about-timeline-body">
-              Completed intensive full stack training with team-based delivery and production
-              workflows.
+              Completed an intensive software engineering program covering frontend, backend, and APIs, with hands-on experience building
+              <tr/> full-stack CRUD web applications.
             </p>
             <p className="about-timeline-meta">Oct 2024 - May 2025</p>
           </li>
@@ -166,9 +166,11 @@ function AboutPage() {
         <h2 className="about-section-title">Awards</h2>
         <ul className="about-list">
           <li>
+            Batelco Night Duathlon Race 2023 <tr/> 🥇 1st Place (Team)<tr/> 🥈 2nd Place (Individual)
+          </li>
+          <li>
             Bahrain National Team - 🥉 3rd Place <tr/> Arab Cross Country Running Championship 2023 (Egypt)
           </li>
-          <li>Batelco Night Duathlon Race 2023 <tr/> 🥇 1st Place (Team)<tr/> 🥈 2nd Place (Individual)</li>
         </ul>
       </div>
     </section>
