@@ -129,7 +129,6 @@ function ContactPage() {
 
       <div className="contact-methods">
 
-
         <div className="contact-card contact-card--download">
           <div className="contact-card-icon">
             <IoDocumentTextOutline aria-hidden="true" />
