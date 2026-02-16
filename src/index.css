@@ -1,16 +1,75 @@
+/* ===== Light Theme (default) ===== */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light;
-  color: #213547;
-  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Page colors */
+  --page-bg: #ffffff;
+  --page-text: #213547;
+  --page-heading: #000000;
+
+  /* Avatar */
+  --avatar-border: rgba(0, 0, 0, 0.08);
+  --avatar-shadow: rgba(0, 0, 0, 0.12);
+
+  /* Switcher pill */
+  --switcher-bg: rgba(0, 0, 0, 0.06);
+  --switcher-border: rgba(0, 0, 0, 0.08);
+  --switcher-text: rgba(0, 0, 0, 0.55);
+  --switcher-text-hover: rgba(0, 0, 0, 0.75);
+  --switcher-active-text: #1a1a1a;
+  --switcher-indicator-bg: #ffffff;
+  --switcher-indicator-shadow: rgba(0, 0, 0, 0.1);
+  --switcher-indicator-shadow-2: rgba(0, 0, 0, 0.06);
+
+  /* Device wrapper shadow */
+  --device-shadow: rgba(0, 0, 0, 0.25);
+
+  /* Theme toggle */
+  --toggle-bg: rgba(0, 0, 0, 0.05);
+  --toggle-border: rgba(0, 0, 0, 0.1);
+  --toggle-color: #213547;
+
+  color: var(--page-text);
+  background-color: var(--page-bg);
+}
+
+/* ===== Dark Theme ===== */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --page-bg: #0f0f0f;
+  --page-text: #e0e0e0;
+  --page-heading: #f0f0f0;
+
+  --avatar-border: rgba(255, 255, 255, 0.08);
+  --avatar-shadow: rgba(0, 0, 0, 0.4);
+
+  --switcher-bg: rgba(255, 255, 255, 0.06);
+  --switcher-border: rgba(255, 255, 255, 0.08);
+  --switcher-text: rgba(255, 255, 255, 0.55);
+  --switcher-text-hover: rgba(255, 255, 255, 0.75);
+  --switcher-active-text: #f0f0f0;
+  --switcher-indicator-bg: #2a2a2a;
+  --switcher-indicator-shadow: rgba(0, 0, 0, 0.3);
+  --switcher-indicator-shadow-2: rgba(0, 0, 0, 0.2);
+
+  --device-shadow: rgba(0, 0, 0, 0.5);
+
+  --toggle-bg: rgba(255, 255, 255, 0.06);
+  --toggle-border: rgba(255, 255, 255, 0.1);
+  --toggle-color: #e0e0e0;
+
+  color: var(--page-text);
+  background-color: var(--page-bg);
 }
 
 a {
@@ -28,7 +87,10 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #ffffff;
+  background-color: var(--page-bg);
+  transition:
+    background-color 0.35s cubic-bezier(0.2, 0, 0, 1),
+    color 0.35s cubic-bezier(0.2, 0, 0, 1);
 }
 
 h1 {
@@ -43,7 +105,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #f9f9f9;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -59,18 +121,5 @@ button:focus-visible {
   body {
     display: block;
     min-height: 100svh;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
   }
 }

@@ -1,0 +1,52 @@
+.theme-toggle {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--toggle-border);
+  background: var(--toggle-bg);
+  color: var(--toggle-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition:
+    background-color 0.3s cubic-bezier(0.2, 0, 0, 1),
+    border-color 0.3s cubic-bezier(0.2, 0, 0, 1),
+    color 0.3s cubic-bezier(0.2, 0, 0, 1),
+    transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 0.3s cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle-icon {
+  display: flex;
+  font-size: 20px;
+  line-height: 1;
+}
+
+@media (max-width: 900px) {
+  .theme-toggle {
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .theme-toggle-icon {
+    font-size: 18px;
+  }
+}

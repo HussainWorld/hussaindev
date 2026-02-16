@@ -1,11 +1,16 @@
 import './App.css'
-import IPhoneMockup from './components/IPhoneMockup'
+import DeviceMockup from './components/DeviceMockup'
 import IPhoneScreen from './components/IPhoneScreen'
+import ThemeToggle from './components/ThemeToggle'
+import { useTheme } from './hooks/useTheme'
 import pfp from './assets/mePFP-White.jpg'
 
 function App() {
+  const { theme, toggleTheme } = useTheme()
+
   return (
     <main className="hero">
+      <ThemeToggle theme={theme} onToggle={toggleTheme} />
       <div className="intro">
         <img src={pfp} alt="Hussain Nader" className="intro-avatar" />
         <p className="eyebrow">Hello, I am</p>
@@ -14,9 +19,9 @@ function App() {
       </div>
 
       <div className="device">
-        <IPhoneMockup>
+        <DeviceMockup>
           <IPhoneScreen />
-        </IPhoneMockup>
+        </DeviceMockup>
       </div>
     </main>
   )

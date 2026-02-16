@@ -1,0 +1,345 @@
+/* ============================================
+   DEVICE MOCKUP — Material Design 3 Inspired
+   ============================================ */
+
+/* --- Container & Entrance Animation --- */
+.device-mockup-container {
+  width: 100%;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s cubic-bezier(0.2, 0, 0, 1),
+    transform 0.6s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.device-mockup-container.entered {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Device Switcher Pill (MD3 Segmented Button) --- */
+.device-switcher {
+  position: relative;
+  display: flex;
+  background: var(--switcher-bg);
+  border-radius: 100px;
+  padding: 4px;
+  z-index: 10;
+  border: 1px solid var(--switcher-border);
+  transition:
+    background-color 0.35s cubic-bezier(0.2, 0, 0, 1),
+    border-color 0.35s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.switcher-option {
+  position: relative;
+  z-index: 2;
+  padding: 8px 24px;
+  border: none;
+  background: transparent;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--switcher-text);
+  cursor: pointer;
+  transition: color 0.25s cubic-bezier(0.2, 0, 0, 1);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.switcher-option:hover {
+  color: var(--switcher-text-hover);
+}
+
+.switcher-option.active {
+  color: var(--switcher-active-text);
+}
+
+.switcher-indicator {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  background: var(--switcher-indicator-bg);
+  border-radius: 100px;
+  box-shadow:
+    0 1px 3px var(--switcher-indicator-shadow),
+    0 1px 2px var(--switcher-indicator-shadow-2);
+  transition: transform 0.3s cubic-bezier(0.35, 0, 0.25, 1);
+  z-index: 1;
+}
+
+/* --- Tilt Wrapper (captures mouse, applies shadow) --- */
+.device-tilt-wrapper {
+  transition: filter 0.3s cubic-bezier(0.2, 0, 0, 1);
+  filter: drop-shadow(0px 20px 40px var(--device-shadow));
+}
+
+/* --- Device Body (frame + content, receives tilt transform) --- */
+.device-body {
+  position: relative;
+  height: 87vh;
+  aspect-ratio: 3750 / 7584;
+  max-width: 90vw;
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0, 0, 1),
+    background-color 0.3s cubic-bezier(0.2, 0, 0, 1),
+    border-radius 0.3s cubic-bezier(0.2, 0, 0, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Dark phone body when Android is active */
+.device-body.show-android {
+  background: #1c1c1e;
+  border-radius: 11% / 5.5%;
+  overflow: hidden;
+  /* Flatten 3D so z-index stacking works normally on iOS Safari */
+  transform-style: flat;
+}
+
+/* Hide iOS home indicator bar in Android view */
+.device-body.show-android .portfolio-tabbar::after {
+  display: none;
+}
+
+/* --- Floating Animation --- */
+.device-float {
+  animation: device-float 4s ease-in-out infinite;
+}
+
+@keyframes device-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+/* --- Content Layer --- */
+
+/* iPhone content positioning (matches existing PNG frame insets) */
+.phone-content.iphone-content {
+  position: absolute;
+  top: 1.4%;
+  left: 4.4%;
+  right: 4.4%;
+  bottom: 1.1%;
+  z-index: 1;
+  background: #202020;
+  border-radius: 9.5% / 4.8%;
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.3);
+  transition:
+    top 0.3s cubic-bezier(0.2, 0, 0, 1),
+    left 0.3s cubic-bezier(0.2, 0, 0, 1),
+    right 0.3s cubic-bezier(0.2, 0, 0, 1),
+    bottom 0.3s cubic-bezier(0.2, 0, 0, 1),
+    border-radius 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Android content — fills body, frame border covers edges */
+.phone-content.android-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background: #202020;
+  border-radius: 11% / 5.5%;
+  overflow: hidden;
+}
+
+.phone-content > * {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- iPhone Frame (existing PNG approach) --- */
+.phone-frame-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: contrast(1.1);
+  transition:
+    opacity 0.3s cubic-bezier(0.2, 0, 0, 1),
+    transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* --- Android Frame (Pure CSS Google Pixel) --- */
+.android-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  border: 5px solid #2c2c2e;
+  border-radius: 11% / 5.5%;
+  box-sizing: border-box;
+  /* Layered shadows: outer edge highlight, inner screen recess */
+  /* box-shadow:
+    0 0 0 1.5px #3a3a3c,
+    inset 0 0 0 1.5px #1a1a1c,
+    inset 0 0 8px 2px rgba(0, 0, 0, 0.5); */
+  transition:
+    opacity 0.3s cubic-bezier(0.2, 0, 0, 1),
+    transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Android camera cutout (centered hole-punch) */
+.android-camera-cutout {
+  position: absolute;
+  top: 1.8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: #000000;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.8),
+    0 0 0 1.5px #2c2c2e,
+    0 0 0 3px #1c1c1e;
+  z-index: 3;
+}
+
+/* --- Frame Visibility States (crossfade + scale) --- */
+.frame-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.frame-hidden {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+/* --- Android Side Buttons --- */
+.android-frame::before {
+  /* Power button — right side */
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: 22%;
+  width: 4px;
+  height: 8%;
+  background: linear-gradient(90deg, #2c2c2e, #3a3a3c);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.android-frame::after {
+  /* Volume rocker — left side */
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 18%;
+  width: 4px;
+  height: 14%;
+  background: linear-gradient(270deg, #2c2c2e, #3a3a3c);
+  border-radius: 2px 0 0 2px;
+  box-shadow: -1px 0 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE: Mobile (max-width: 900px)
+   ============================================ */
+@media (max-width: 900px) {
+  .device-mockup-container {
+    height: auto;
+    padding: 1rem 0 2rem;
+  }
+
+  .device-body {
+    /* Fill most of the screen on mobile — it's the main interactive element */
+    height: 100svh;
+    max-width: 90vw;
+  }
+
+
+  /* Static shadow on mobile (no tilt) */
+  .device-tilt-wrapper {
+    filter: drop-shadow(0px 16px 32px rgba(0, 0, 0, 0.22)) !important;
+  }
+
+  /* Smaller float on mobile */
+  @keyframes device-float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -5px;
+    }
+  }
+
+  .switcher-option {
+    padding: 7px 20px;
+    font-size: 12px;
+  }
+
+  .android-camera-cutout {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION: Respect user preferences
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .device-mockup-container {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .device-float {
+    animation: none;
+  }
+
+  .device-body {
+    transition: none;
+  }
+
+  .device-tilt-wrapper {
+    transition: none;
+  }
+
+  .phone-frame-overlay,
+  .android-frame {
+    transition: opacity 0.15s ease;
+    transform: none !important;
+  }
+
+  .phone-content.iphone-content,
+  .phone-content.android-content {
+    transition: none;
+  }
+
+  .switcher-indicator {
+    transition: none;
+  }
+}
