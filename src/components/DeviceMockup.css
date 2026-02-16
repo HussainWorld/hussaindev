@@ -151,6 +151,7 @@
     border-radius 0.3s cubic-bezier(0.2, 0, 0, 1);
 }
 
+
 /* Android content — fills body, frame border covers edges */
 .phone-content.android-content {
   position: absolute;
