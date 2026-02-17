@@ -50,6 +50,7 @@ function AboutPage() {
         </ol>
       </div>
 
+
       <div className="about-section">
         <h2 className="about-section-title">Education</h2>
         <ol className="about-timeline">
