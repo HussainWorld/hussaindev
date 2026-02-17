@@ -41,7 +41,7 @@ function IPhoneScreen() {
         ) : activeTab === 'contact' ? (
           <ContactPage />
         ) : (
-          <Home />
+          <Home onTabChange={handleTabChange} />
         )}
       </div>
 

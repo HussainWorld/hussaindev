@@ -35,6 +35,22 @@ function AboutPage() {
       </div> */}
 
       <div className="about-section">
+        <h2 className="about-section-title">Experience</h2>
+        <ol className="about-timeline">
+          <li className="about-timeline-item">
+            <div className="about-timeline-heading">
+              <img src={reboot01Logo} alt="Reboot01 logo" className="about-logo" />
+              <p className="about-timeline-role">Reboot01 — Developer Intern</p>
+            </div>
+            <p className="about-timeline-body">
+              Working as a developer intern, contributing to real-world projects.
+            </p>
+            <p className="about-timeline-meta">Oct 2025 — Apr 2026</p>
+          </li>
+        </ol>
+      </div>
+
+      <div className="about-section">
         <h2 className="about-section-title">Education</h2>
         <ol className="about-timeline">
           <li className="about-timeline-item">

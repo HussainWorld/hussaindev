@@ -111,9 +111,46 @@ function DeviceMockup({ children }: DeviceMockupProps) {
             className={`phone-frame-overlay ${device === 'iphone' ? 'frame-visible' : 'frame-hidden'}`}
           />
 
-          {/* Android frame: pure CSS */}
+          {/* Android frame: realistic CSS phone */}
           <div className={`android-frame ${device === 'android' ? 'frame-visible' : 'frame-hidden'}`}>
-            <div className="android-camera-cutout" />
+            {/* Side buttons */}
+            <div className="android-btn-power" />
+            <div className="android-btn-vol-up" />
+            <div className="android-btn-vol-down" />
+
+            {/* Earpiece speaker */}
+            <div className="android-earpiece" />
+
+            {/* Camera punch-hole */}
+            <div className="android-camera-cutout">
+              <div className="android-camera-lens" />
+            </div>
+
+            {/* Status bar */}
+            <div className="android-status-bar">
+              <span className="android-status-time">9:41</span>
+              <div className="android-status-icons">
+                <span className="android-status-nw">5G</span>
+                <svg className="android-status-icon" viewBox="0 0 24 24">
+                  <path d="M2 22h20V2zm18-2H6.83L20 6.83z" fill="white"/>
+                </svg>
+                <svg className="android-status-icon" viewBox="0 0 24 24">
+                  <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" fill="white"/>
+                </svg>
+                <span className="android-status-batt">85</span>
+                <svg className="android-status-icon android-battery-icon" viewBox="0 0 24 24">
+                  <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" fill="white"/>
+                </svg>
+              </div>
+            </div>
+
+            {/* Navigation gesture bar */}
+            <div className="android-nav-bar">
+              <div className="android-gesture-pill" />
+            </div>
+
+            {/* Screen glass reflection */}
+            <div className="android-screen-glare" />
           </div>
         </div>
       </div>

@@ -100,13 +100,21 @@
   will-change: transform;
 }
 
-/* Dark phone body when Android is active */
+/* Phone chassis when Android is active — metallic gradient body */
 .device-body.show-android {
-  background: #1c1c1e;
+  background: linear-gradient(
+    170deg,
+    #333335 0%,
+    #262628 8%,
+    #1c1c1e 20%,
+    #1c1c1e 80%,
+    #1a1a1c 92%,
+    #111113 100%
+  );
   border-radius: 11% / 5.5%;
-  overflow: hidden;
-  /* Flatten 3D so z-index stacking works normally on iOS Safari */
+  /* Flat 3D so z-index stacking works on iOS Safari */
   transform-style: flat;
+  /* NO overflow: hidden — side buttons need to extend outside */
 }
 
 /* Hide iOS home indicator bar in Android view */
@@ -139,30 +147,49 @@
   right: 4.4%;
   bottom: 1.1%;
   z-index: 1;
-  background: #202020;
-  border-radius: 9.5% / 4.8%;
+  background: #131316;
+  border-radius: 12% / 4.8%;
   overflow: hidden;
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.2);
   transition:
     top 0.3s cubic-bezier(0.2, 0, 0, 1),
     left 0.3s cubic-bezier(0.2, 0, 0, 1),
     right 0.3s cubic-bezier(0.2, 0, 0, 1),
     bottom 0.3s cubic-bezier(0.2, 0, 0, 1),
-    border-radius 0.3s cubic-bezier(0.2, 0, 0, 1);
+    border-radius 0.3s cubic-bezier(0.2, 0, 0, 1),
+    background-color 0.35s cubic-bezier(0.2, 0, 0, 1);
 }
 
+/* Dark page → light phone */
+[data-theme="dark"] .phone-content.iphone-content {
+  background: #FFFFFF;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.05);
+}
 
-/* Android content — fills body, frame border covers edges */
+/* Android content — thin bezel around screen */
 .phone-content.android-content {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0.8%;
+  left: 2.2%;
+  right: 2.2%;
+  bottom: 0.8%;
   z-index: 1;
-  background: #202020;
-  border-radius: 11% / 5.5%;
+  background: #131316;
+  border-radius: 9.5% / 4.8%;
   overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  transition:
+    top 0.3s cubic-bezier(0.2, 0, 0, 1),
+    left 0.3s cubic-bezier(0.2, 0, 0, 1),
+    right 0.3s cubic-bezier(0.2, 0, 0, 1),
+    bottom 0.3s cubic-bezier(0.2, 0, 0, 1),
+    border-radius 0.3s cubic-bezier(0.2, 0, 0, 1),
+    background-color 0.35s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Dark page → light phone */
+[data-theme="dark"] .phone-content.android-content {
+  background: #FFFFFF;
 }
 
 .phone-content > * {
@@ -187,43 +214,260 @@
     transform 0.3s cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* --- Android Frame (Pure CSS Google Pixel) --- */
+/* ============================================
+   ANDROID FRAME — Realistic Phone Design
+   ============================================ */
+
+/* Main frame overlay — edge highlights for metallic depth */
 .android-frame {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
+  /* ???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????? */
+  /* z-index: 2; */
   pointer-events: none;
-  border: 5px solid #2c2c2e;
   border-radius: 11% / 5.5%;
-  box-sizing: border-box;
-  /* Layered shadows: outer edge highlight, inner screen recess */
-  /* box-shadow:
-    0 0 0 1.5px #3a3a3c,
-    inset 0 0 0 1.5px #1a1a1c,
-    inset 0 0 8px 2px rgba(0, 0, 0, 0.5); */
+  box-shadow: none;
   transition:
     opacity 0.3s cubic-bezier(0.2, 0, 0, 1),
     transform 0.3s cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* Android camera cutout (centered hole-punch) */
-.android-camera-cutout {
+/* --- Android Side Buttons --- */
+
+/* Power button — right side */
+.android-btn-power {
   position: absolute;
-  top: 1.8%;
+  right: -4px;
+  top: 22%;
+  width: 4px;
+  height: 8%;
+  background: linear-gradient(
+    90deg,
+    #3a3a3c 0%,
+    #555 30%,
+    #4a4a4c 70%,
+    #3a3a3c 100%
+  );
+  border-radius: 0 3px 3px 0;
+  box-shadow:
+    2px 0 4px rgba(0, 0, 0, 0.5),
+    inset -1px 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Volume up — left side */
+.android-btn-vol-up {
+  position: absolute;
+  left: -4px;
+  top: 17%;
+  width: 4px;
+  height: 7%;
+  background: linear-gradient(
+    270deg,
+    #3a3a3c 0%,
+    #555 30%,
+    #4a4a4c 70%,
+    #3a3a3c 100%
+  );
+  border-radius: 3px 0 0 3px;
+  box-shadow:
+    -2px 0 4px rgba(0, 0, 0, 0.5),
+    inset 1px 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Volume down — left side, below vol up */
+.android-btn-vol-down {
+  position: absolute;
+  left: -4px;
+  top: 26%;
+  width: 4px;
+  height: 7%;
+  background: linear-gradient(
+    270deg,
+    #3a3a3c 0%,
+    #555 30%,
+    #4a4a4c 70%,
+    #3a3a3c 100%
+  );
+  border-radius: 3px 0 0 3px;
+  box-shadow:
+    -2px 0 4px rgba(0, 0, 0, 0.5),
+    inset 1px 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* --- Earpiece Speaker Grille --- */
+.android-earpiece {
+  position: absolute;
+  top: 0.25%;
   left: 50%;
   transform: translateX(-50%);
-  width: 12px;
-  height: 12px;
-  background: #000000;
-  border-radius: 50%;
+  width: 12%;
+  height: 3px;
+  background: #0a0a0a;
+  border-radius: 2px;
   box-shadow:
     inset 0 1px 2px rgba(0, 0, 0, 0.8),
-    0 0 0 1.5px #2c2c2e,
-    0 0 0 3px #1c1c1e;
+    0 0 0 0.5px rgba(255, 255, 255, 0.05);
   z-index: 3;
+}
+
+/* --- Camera Punch-Hole --- */
+.android-camera-cutout {
+  position: absolute;
+  top: 1.6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background: #050505;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.9),
+    0 0 0 2px #1a1a1c,
+    0 0 0 3px rgba(255, 255, 255, 0.05);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Camera lens with colored reflection */
+.android-camera-lens {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 40% 35%,
+    #1a1a3a 0%,
+    #0a0a1a 60%,
+    #050510 100%
+  );
+  box-shadow:
+    inset 0 0 2px rgba(100, 120, 255, 0.2),
+    inset 1px -1px 1px rgba(255, 255, 255, 0.08);
+}
+
+/* --- Status Bar --- */
+.android-status-bar {
+  position: absolute;
+  top: 1%;
+  left: 3.5%;
+  right: 3.5%;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  z-index: 5;
+  box-sizing: border-box;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.15) 60%,
+    transparent 100%
+  );
+  border-radius: 9.5% 9.5% 0 0 / 80% 80% 0 0;
+}
+
+.android-status-time {
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  font-family: 'Inter', 'Roboto', system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.android-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.android-status-icon {
+  display: block;
+  width: 13px;
+  height: 13px;
+  opacity: 0.92;
+}
+
+/* Network type label (5G / LTE) */
+.android-status-nw {
+  font-size: 9px;
+  font-weight: 700;
+  color: white;
+  font-family: 'Inter', 'Roboto', system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+/* Battery percentage */
+.android-status-batt {
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+  font-family: 'Inter', 'Roboto', system-ui, sans-serif;
+  line-height: 1;
+  opacity: 0.85;
+}
+
+.android-battery-icon {
+  width: 11px;
+  height: 11px;
+}
+
+/* --- Navigation Gesture Bar --- */
+.android-nav-bar {
+  position: absolute;
+  bottom: 1.2%;
+  left: 2.2%;
+  right: 2.2%;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  box-sizing: border-box;
+}
+
+.android-gesture-pill {
+  width: 30%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 100px;
+}
+
+/* Dark page → light phone: dark gesture pill */
+[data-theme="dark"] .android-gesture-pill {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Dark page → light phone: remove button shadows */
+[data-theme="dark"] .android-btn-power,
+[data-theme="dark"] .android-btn-vol-up,
+[data-theme="dark"] .android-btn-vol-down {
+  box-shadow: none;
+}
+
+/* --- Screen Glass Reflection --- */
+.android-screen-glare {
+  position: absolute;
+  top: 0.8%;
+  left: 2.2%;
+  right: 2.2%;
+  height: 50%;
+  border-radius: 9.5% 9.5% 0 0 / 4.8% 4.8% 0 0;
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.012) 30%,
+    transparent 55%
+  );
+  z-index: 6;
+  pointer-events: none;
 }
 
 /* --- Frame Visibility States (crossfade + scale) --- */
@@ -237,33 +481,6 @@
   transform: scale(0.97);
 }
 
-/* --- Android Side Buttons --- */
-.android-frame::before {
-  /* Power button — right side */
-  content: "";
-  position: absolute;
-  right: -5px;
-  top: 22%;
-  width: 4px;
-  height: 8%;
-  background: linear-gradient(90deg, #2c2c2e, #3a3a3c);
-  border-radius: 0 2px 2px 0;
-  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.3);
-}
-
-.android-frame::after {
-  /* Volume rocker — left side */
-  content: "";
-  position: absolute;
-  left: -5px;
-  top: 18%;
-  width: 4px;
-  height: 14%;
-  background: linear-gradient(270deg, #2c2c2e, #3a3a3c);
-  border-radius: 2px 0 0 2px;
-  box-shadow: -1px 0 2px rgba(0, 0, 0, 0.3);
-}
-
 /* ============================================
    RESPONSIVE: Mobile (max-width: 900px)
    ============================================ */
@@ -274,11 +491,9 @@
   }
 
   .device-body {
-    /* Fill most of the screen on mobile — it's the main interactive element */
     height: 100svh;
     max-width: 90vw;
   }
-
 
   /* Static shadow on mobile (no tilt) */
   .device-tilt-wrapper {
@@ -301,9 +516,70 @@
     font-size: 12px;
   }
 
+  /* Scale down Android hardware details on mobile */
   .android-camera-cutout {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .android-camera-lens {
+    width: 5px;
+    height: 5px;
+  }
+
+  .android-earpiece {
+    height: 2px;
+    width: 10%;
+  }
+
+  .android-status-bar {
+    height: 20px;
+    padding: 0 8px;
+  }
+
+  .android-status-time {
+    font-size: 10px;
+  }
+
+  .android-status-nw {
+    font-size: 8px;
+  }
+
+  .android-status-batt {
+    font-size: 8px;
+  }
+
+  .android-status-icon {
+    width: 10px;
+    height: 10px;
+  }
+
+  .android-battery-icon {
+    width: 9px;
+    height: 9px;
+  }
+
+  .android-status-icons {
+    gap: 3px;
+  }
+
+  .android-gesture-pill {
+    height: 3px;
+  }
+
+  .android-btn-power,
+  .android-btn-vol-up,
+  .android-btn-vol-down {
+    width: 3px;
+  }
+
+  .android-btn-power {
+    right: -3px;
+  }
+
+  .android-btn-vol-up,
+  .android-btn-vol-down {
+    left: -3px;
   }
 }
 

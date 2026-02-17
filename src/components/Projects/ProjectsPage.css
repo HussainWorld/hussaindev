@@ -61,16 +61,16 @@
 }
 
 .projects-page .project-card:hover {
-  border-color: rgba(125, 211, 252, 0.35);
+  border-color: var(--md-accent-border);
 }
 
 .projects-page .project-card:focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--md-accent);
   outline-offset: 2px;
 }
 
 .projects-page .project-media {
-  background: #ffffff;
+  background: var(--md-surface-container);
   border-bottom: 1px solid var(--border);
   padding: 12px;
   display: grid;

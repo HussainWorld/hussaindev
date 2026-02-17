@@ -1,4 +1,13 @@
-import { IoBriefcase, IoHome, IoMail, IoPerson } from 'react-icons/io5'
+import {
+  IoHome,
+  IoHomeOutline,
+  IoBriefcase,
+  IoBriefcaseOutline,
+  IoPerson,
+  IoPersonOutline,
+  IoMail,
+  IoMailOutline,
+} from 'react-icons/io5'
 
 export type NavTab = 'home' | 'projects' | 'about' | 'contact'
 
@@ -7,45 +16,40 @@ interface NavBarProps {
   onTabChange: (tab: NavTab) => void
 }
 
+const tabs: { id: NavTab; label: string; icon: React.ReactNode; activeIcon: React.ReactNode }[] = [
+  { id: 'home', label: 'Home', icon: <IoHomeOutline />, activeIcon: <IoHome /> },
+  { id: 'projects', label: 'Projects', icon: <IoBriefcaseOutline />, activeIcon: <IoBriefcase /> },
+  { id: 'about', label: 'About', icon: <IoPersonOutline />, activeIcon: <IoPerson /> },
+  { id: 'contact', label: 'Contact', icon: <IoMailOutline />, activeIcon: <IoMail /> },
+]
+
 function NavBar({ activeTab, onTabChange }: NavBarProps) {
+  const activeIndex = tabs.findIndex((t) => t.id === activeTab)
+
   return (
-    <nav className="portfolio-tabbar" aria-label="Portfolio tabs">
-      <button
-        className={`tab-item${activeTab === 'home' ? ' active' : ''}`}
-        type="button"
-        aria-current={activeTab === 'home' ? 'page' : undefined}
-        onClick={() => onTabChange('home')}
-      >
-        <IoHome className="tab-icon" aria-hidden="true" />
-        <span className="tab-label">Home</span>
-      </button>
-      <button
-        className={`tab-item${activeTab === 'projects' ? ' active' : ''}`}
-        type="button"
-        aria-current={activeTab === 'projects' ? 'page' : undefined}
-        onClick={() => onTabChange('projects')}
-      >
-        <IoBriefcase className="tab-icon" aria-hidden="true" />
-        <span className="tab-label">Projects</span>
-      </button>
-      <button
-        className={`tab-item${activeTab === 'about' ? ' active' : ''}`}
-        type="button"
-        aria-current={activeTab === 'about' ? 'page' : undefined}
-        onClick={() => onTabChange('about')}
-      >
-        <IoPerson className="tab-icon" aria-hidden="true" />
-        <span className="tab-label">About</span>
-      </button>
-      <button
-        className={`tab-item${activeTab === 'contact' ? ' active' : ''}`}
-        type="button"
-        aria-current={activeTab === 'contact' ? 'page' : undefined}
-        onClick={() => onTabChange('contact')}
-      >
-        <IoMail className="tab-icon" aria-hidden="true" />
-        <span className="tab-label">Contact</span>
-      </button>
+    <nav
+      className="portfolio-tabbar"
+      aria-label="Portfolio tabs"
+      style={{ '--active-idx': activeIndex } as React.CSSProperties}
+    >
+      <div className="nav-pill-indicator" />
+      {tabs.map((tab) => {
+        const isActive = activeTab === tab.id
+        return (
+          <button
+            key={tab.id}
+            className={`tab-item${isActive ? ' active' : ''}`}
+            type="button"
+            aria-current={isActive ? 'page' : undefined}
+            onClick={() => onTabChange(tab.id)}
+          >
+            <span className="tab-icon" aria-hidden="true">
+              {isActive ? tab.activeIcon : tab.icon}
+            </span>
+            <span className="tab-label">{tab.label}</span>
+          </button>
+        )
+      })}
     </nav>
   )
 }
