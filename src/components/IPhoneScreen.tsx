@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import './IPhoneScreen.css'
 import AboutPage from './About/AboutPage'
 import ContactPage from './Contact/ContactPage'
@@ -12,6 +12,7 @@ import type { ProjectId } from './Projects/projectsData'
 function IPhoneScreen() {
   const [activeTab, setActiveTab] = useState<NavTab>('home')
   const [selectedProjectId, setSelectedProjectId] = useState<ProjectId | null>(null)
+  const portalRef = useRef<HTMLDivElement>(null)
 
   const handleTabChange = (tab: NavTab) => {
     setActiveTab(tab)
@@ -31,7 +32,7 @@ function IPhoneScreen() {
     <div className="portfolio-screen">
       <div className="portfolio-content">
         {selectedProjectId === 'reboot01-mobile-app' ? (
-          <Reboot01ProjectDetail onBack={handleProjectBack} />
+          <Reboot01ProjectDetail onBack={handleProjectBack} portalTarget={portalRef.current} />
         ) : selectedProjectId === 'portfolio-experience' ? (
           <PortfolioProjectDetail onBack={handleProjectBack} />
         ) : activeTab === 'about' ? (
@@ -46,6 +47,7 @@ function IPhoneScreen() {
       </div>
 
       <NavBar activeTab={activeTab} onTabChange={handleTabChange} />
+      <div ref={portalRef} />
     </div>
   )
 }

@@ -10,7 +10,7 @@ function App() {
   return (
     <main className="hero">
       <ThemeToggle theme={theme} onToggle={toggleTheme} />
-      <p className="wordmark">hussain.dev</p>
+      <p className="wordmark">hussaindev.com</p>
 
       <div className="device">
         <DeviceMockup>

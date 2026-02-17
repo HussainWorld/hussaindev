@@ -1,4 +1,5 @@
 import { type PointerEvent, useEffect, useId, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import './Reboot01ProjectDetail.css'
 import reboot01MobileApp from '../../../../assets/reboot01MobileApp.png'
 import reboot01Logo from '../../../../assets/reboot01Logo.png'
@@ -32,9 +33,10 @@ const screenshotSources = Object.entries(screenshotModules)
 
 type Reboot01ProjectDetailProps = {
   onBack: () => void
+  portalTarget?: HTMLElement | null
 }
 
-function Reboot01ProjectDetail({ onBack }: Reboot01ProjectDetailProps) {
+function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailProps) {
   const previewImages = screenshotSources.length > 0 ? screenshotSources : [reboot01MobileApp]
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -179,66 +181,71 @@ function Reboot01ProjectDetail({ onBack }: Reboot01ProjectDetailProps) {
           </span>
         </button>
       </div>
-      {isPreviewOpen ? (
-        <div
-          id={lightboxId}
-          className="project-detail-lightbox"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Reboot01 mobile app screenshots full screen"
-          onClick={closePreview}
-        >
-          <div
-            className="project-detail-lightbox-carousel"
-            onPointerDown={handleCarouselPointerDown}
-            onPointerMove={handleCarouselPointerMove}
-            onPointerUp={handleCarouselPointerEnd}
-            onPointerCancel={handleCarouselPointerCancel}
-            onClick={(event) => event.stopPropagation()}
-            aria-label="Reboot01 mobile app screenshots"
-          >
-            <div
-              className={`project-detail-lightbox-track${isDragging ? ' is-dragging' : ''}`}
-              style={{
-                transform: `translateX(calc(${-activeIndex * 100}% + ${dragOffset}px))`,
-              }}
-            >
-              {previewImages.map((image, index) => (
-                <div className="project-detail-lightbox-slide" key={image}>
-                  <img
-                    src={image}
-                    alt={`Reboot01 mobile app screenshot ${index + 1} of ${
-                      previewImages.length
-                    }`}
-                    className="project-detail-lightbox-image"
-                  />
+      {isPreviewOpen
+        ? (() => {
+            const lightbox = (
+              <div
+                id={lightboxId}
+                className="project-detail-lightbox"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Reboot01 mobile app screenshots full screen"
+                onClick={closePreview}
+              >
+                <div
+                  className="project-detail-lightbox-carousel"
+                  onPointerDown={handleCarouselPointerDown}
+                  onPointerMove={handleCarouselPointerMove}
+                  onPointerUp={handleCarouselPointerEnd}
+                  onPointerCancel={handleCarouselPointerCancel}
+                  onClick={(event) => event.stopPropagation()}
+                  aria-label="Reboot01 mobile app screenshots"
+                >
+                  <div
+                    className={`project-detail-lightbox-track${isDragging ? ' is-dragging' : ''}`}
+                    style={{
+                      transform: `translateX(calc(${-activeIndex * 100}% + ${dragOffset}px))`,
+                    }}
+                  >
+                    {previewImages.map((image, index) => (
+                      <div className="project-detail-lightbox-slide" key={image}>
+                        <img
+                          src={image}
+                          alt={`Reboot01 mobile app screenshot ${index + 1} of ${
+                            previewImages.length
+                          }`}
+                          className="project-detail-lightbox-image"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
-          <div
-            className="project-detail-lightbox-pagination"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="project-detail-lightbox-dots" aria-hidden="true">
-              {previewImages.map((image, index) => (
-                <span
-                  className={`project-detail-lightbox-dot${
-                    index === activeIndex ? ' is-active' : ''
-                  }`}
-                  key={image}
-                />
-              ))}
-            </div>
-            <span className="project-detail-lightbox-count">
-              {activeIndex + 1} / {previewImages.length}
-            </span>
-          </div>
-          <p className="project-detail-lightbox-hint" aria-hidden="true">
-            Swipe to view more. Tap to close.
-          </p>
-        </div>
-      ) : null}
+                <div
+                  className="project-detail-lightbox-pagination"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <div className="project-detail-lightbox-dots" aria-hidden="true">
+                    {previewImages.map((image, index) => (
+                      <span
+                        className={`project-detail-lightbox-dot${
+                          index === activeIndex ? ' is-active' : ''
+                        }`}
+                        key={image}
+                      />
+                    ))}
+                  </div>
+                  <span className="project-detail-lightbox-count">
+                    {activeIndex + 1} / {previewImages.length}
+                  </span>
+                </div>
+                <p className="project-detail-lightbox-hint" aria-hidden="true">
+                  Swipe to view more. Tap to close.
+                </p>
+              </div>
+            )
+            return portalTarget ? createPortal(lightbox, portalTarget) : lightbox
+          })()
+        : null}
 
       <div className="project-detail-grid">
         <div className="project-detail-card">
