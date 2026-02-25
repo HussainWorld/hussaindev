@@ -18,6 +18,7 @@ function Home({ onTabChange }: HomeProps) {
         <p className="profile-title">Software Engineer | Mobile Developer</p>
       </div>
 
+
       {/* Availability Chip */}
       <div className="availability">
         <span className="availability-dot" aria-hidden="true" />
