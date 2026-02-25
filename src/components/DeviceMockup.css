@@ -150,6 +150,9 @@
   background: #131316;
   border-radius: 12% / 4.8%;
   overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  contain: paint;
+  isolation: isolate;
   box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.2);
   transition:
     top 0.3s cubic-bezier(0.2, 0, 0, 1),
@@ -252,9 +255,6 @@
     #3a3a3c 100%
   );
   border-radius: 0 3px 3px 0;
-  box-shadow:
-    2px 0 4px rgba(0, 0, 0, 0.5),
-    inset -1px 0 1px rgba(255, 255, 255, 0.15);
 }
 
 /* Volume up — left side */
@@ -272,9 +272,6 @@
     #3a3a3c 100%
   );
   border-radius: 3px 0 0 3px;
-  box-shadow:
-    -2px 0 4px rgba(0, 0, 0, 0.5),
-    inset 1px 0 1px rgba(255, 255, 255, 0.15);
 }
 
 /* Volume down — left side, below vol up */
@@ -292,9 +289,6 @@
     #3a3a3c 100%
   );
   border-radius: 3px 0 0 3px;
-  box-shadow:
-    -2px 0 4px rgba(0, 0, 0, 0.5),
-    inset 1px 0 1px rgba(255, 255, 255, 0.15);
 }
 
 /* --- Earpiece Speaker Grille --- */
@@ -491,8 +485,19 @@
   }
 
   .device-body {
-    height: 100svh;
-    max-width: 90vw;
+    /* Both dimensions calculated to always maintain the phone aspect ratio.
+       Fits within 90vw × 100svh without stretching either direction. */
+    width: min(90vw, calc(100vh * 3750 / 7584));
+    width: min(90vw, calc(100svh * 3750 / 7584));
+    height: min(100vh, calc(90vw * 7584 / 3750));
+    height: min(100svh, calc(90vw * 7584 / 3750));
+    max-width: none;
+    transform-style: flat;
+  }
+
+  /* Clip iPhone content on mobile — Android excluded because side buttons extend outside */
+  .device-body.show-iphone {
+    overflow: hidden;
   }
 
   /* Static shadow on mobile (no tilt) */
