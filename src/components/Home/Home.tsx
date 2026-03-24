@@ -50,13 +50,13 @@ function Home({ onTabChange }: HomeProps) {
           <article className="highlight-card">
             <h3 className="highlight-title">Mobile Apps</h3>
             <p className="highlight-body">
-              React Native + Expo apps with smooth UX and solid performance.
+              React Native + Expo apps.
             </p>
           </article>
           <article className="highlight-card">
             <h3 className="highlight-title">Web Platforms</h3>
             <p className="highlight-body">
-              Modern React apps with responsive, polished UI.
+              Modern React apps.
             </p>
           </article>
           <article className="highlight-card">
