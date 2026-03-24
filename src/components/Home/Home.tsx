@@ -2,6 +2,7 @@ import './Home.css'
 import pfp from '../../assets/mePFP-White.jpg'
 import type { NavTab } from '../Nav/NavBar'
 
+
 interface HomeProps {
   onTabChange?: (tab: NavTab) => void
 }
