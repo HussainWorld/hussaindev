@@ -4,6 +4,7 @@ import bahrainPolytechnicLogo from '../../assets/BahrainPolytechnicLogo.png'
 import generalAssemblyLogo from '../../assets/generalAssemblyLogo.svg'
 import reboot01Logo from '../../assets/reboot01Logo.png'
 
+
 function AboutPage() {
   return (
     <section className="about-page">
