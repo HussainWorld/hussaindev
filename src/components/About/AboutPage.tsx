@@ -43,7 +43,7 @@ function AboutPage() {
               <p className="about-timeline-role">Reboot01 — Developer Intern</p>
             </div>
             <p className="about-timeline-body">
-              Working as a developer intern, contributing to real-world projects.
+              Working as a developer intern.
             </p>
             <p className="about-timeline-meta">Oct 2025 — Apr 2026</p>
           </li>
@@ -90,7 +90,7 @@ function AboutPage() {
                 className="about-logo"
               />
               <p className="about-timeline-role">
-                General Assembly <tr/> Software Engineering Bootcamp
+                General Assembly <tr/> Software Engineering Certificate
               </p>
             </div>
             <p className="about-timeline-body">
