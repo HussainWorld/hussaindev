@@ -17,15 +17,15 @@ export type Project = {
 export const projects: Project[] = [
   {
     id: 'reboot01-mobile-app',
-    tag: 'Mobile - In Progress',
-    title: 'Reboot01 Mobile App',
-    summary: 'React Native app with a GraphQL data layer, Supabase backend, and Go services.',
+    tag: 'Mobile - Live',
+    title: 'Reboot Coding Institute',
+    summary: 'Mobile app for Reboot Coding Institute students. Live data, push notifications, audit booking, and more. Live on Google Play.',
     stack: 'React Native, GraphQL, Supabase, Go',
     description:
       'A real-world mobile app focused on reliable data flows, scalable APIs, and a smooth user experience.',
     outcomes: [
-      'Building core flows with a production-ready data layer.',
-      'Integrating Go middleware services for backend reliability.',
+      'Shipped to production with a full GraphQL data layer and Go backend service.',
+      'Live on Google Play with real users across the Reboot01 student community.',
     ],
     image: reboot01MobileApp,
     imageAlt: 'Reboot01 mobile app screenshot',

@@ -41,12 +41,27 @@ function AboutPage() {
           <li className="about-timeline-item">
             <div className="about-timeline-heading">
               <img src={reboot01Logo} alt="Reboot01 logo" className="about-logo" />
-              <p className="about-timeline-role">Reboot01 — Developer Intern</p>
+              <p className="about-timeline-role">Reboot01 — Mobile App Developer</p>
             </div>
             <p className="about-timeline-body">
-              Working as a developer intern.
+              Built and shipped the Reboot Coding Institute mobile app to Google Play.
             </p>
             <p className="about-timeline-meta">Oct 2025 — Apr 2026</p>
+          </li>
+
+          <li className="about-timeline-item">
+            <div className="about-timeline-heading">
+              <img
+                src={generalAssemblyLogo}
+                alt="General Assembly logo"
+                className="about-logo"
+              />
+              <p className="about-timeline-role">General Assembly — Software Engineering</p>
+            </div>
+            <p className="about-timeline-body">
+              Intensive software engineering program covering frontend, backend, and full-stack web development.
+            </p>
+            <p className="about-timeline-meta">Oct 2024 — May 2025</p>
           </li>
         </ol>
       </div>
@@ -83,23 +98,6 @@ function AboutPage() {
             <p className="about-timeline-meta">Expected Aug 2025 - Aug 2027</p>
           </li>
 
-          <li className="about-timeline-item">
-            <div className="about-timeline-heading">
-              <img
-                src={generalAssemblyLogo}
-                alt="General Assembly logo"
-                className="about-logo"
-              />
-              <p className="about-timeline-role">
-                General Assembly <tr/> Software Engineering Certificate
-              </p>
-            </div>
-            <p className="about-timeline-body">
-              Completed an intensive software engineering program covering frontend, backend, and APIs, with hands-on experience building
-              <tr/> full-stack CRUD web applications.
-            </p>
-            <p className="about-timeline-meta">Oct 2024 - May 2025</p>
-          </li>
         </ol>
       </div>
 
@@ -107,10 +105,10 @@ function AboutPage() {
         <h2 className="about-section-title">Notable Projects</h2>
         <div className="about-projects">
           <article className="about-project-card">
-            <p className="about-project-kicker">Mobile - In Progress</p>
-            <h3 className="about-project-title">Reboot01 Mobile App</h3>
+            <p className="about-project-kicker">Mobile - Live</p>
+            <h3 className="about-project-title">Reboot Coding Institute</h3>
             <p className="about-project-body">
-              React Native, GraphQL, Supabase, Go middleware services.
+              React Native, GraphQL, Supabase, Go backend service.
             </p>
             <p className="about-project-outcome">
               Outcome: core flows and data layer in active development.

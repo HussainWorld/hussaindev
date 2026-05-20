@@ -140,7 +140,7 @@ function ContactPage() {
           <a
             className="contact-card-action"
             href={cvPdf}
-            download="Hussain-Nader-CV.pdf"
+            download="Hussain Nader - Software Engineer - CV.pdf"
           >
             <IoDownloadOutline aria-hidden="true" />
             Download

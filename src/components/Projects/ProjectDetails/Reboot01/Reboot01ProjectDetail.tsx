@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import './Reboot01ProjectDetail.css'
 import reboot01MobileApp from '../../../../assets/reboot01MobileApp.png'
 import reboot01Logo from '../../../../assets/reboot01Logo.png'
+import googlePlayIcon from '../../../../assets/googlePlayIcon.png'
 
 type ScreenshotModule = {
   default: string
@@ -37,7 +38,8 @@ type Reboot01ProjectDetailProps = {
 }
 
 function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailProps) {
-  const previewImages = screenshotSources.length > 0 ? screenshotSources : [reboot01MobileApp]
+  const heroImage = screenshotSources.length > 0 ? screenshotSources[0] : reboot01MobileApp
+  const previewImages = screenshotSources.length > 1 ? screenshotSources.slice(1) : [reboot01MobileApp]
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
   const [dragOffset, setDragOffset] = useState(0)
@@ -152,7 +154,7 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
           <img src={reboot01Logo} alt="Reboot01 logo" className="project-detail-logo" />
           <div>
             {/* <p className="project-detail-tag">Mobile - In Progress</p> */}
-            <h1 className="project-detail-title">Reboot01 Mobile App</h1>
+            <h1 className="project-detail-title">Reboot Coding Institute</h1>
           </div>
         </div>
         <p className="project-detail-summary">
@@ -172,7 +174,7 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
           aria-label="View the Reboot01 mobile app screenshots full screen"
         >
           <img
-            src={previewImages[0]}
+            src={heroImage}
             alt="Reboot01 mobile app screenshot"
             className="project-detail-image"
           />
@@ -247,6 +249,16 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
           })()
         : null}
 
+      <a
+        href="https://play.google.com/store/apps/details?id=com.reboot01.students&pcampaignid=web_share"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="project-detail-link"
+      >
+        View on Google Play
+        <img src={googlePlayIcon} alt="" className="project-detail-link-icon" aria-hidden="true" />
+      </a>
+
       <div className="project-detail-grid">
         <div className="project-detail-card">
           <p className="project-detail-card-label">Role</p>
@@ -254,58 +266,75 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
         </div>
         <div className="project-detail-card">
           <p className="project-detail-card-label">Status</p>
-          <p className="project-detail-card-body">Building core flows</p>
+          <p className="project-detail-card-body">Live on Google Play</p>
         </div>
         <div className="project-detail-card">
           <p className="project-detail-card-label">Stack</p>
-          <p className="project-detail-card-body">React Native, Expo, GraphQL, Supabase, Go</p>
+          <p className="project-detail-card-body">React Native · Expo · TypeScript · GraphQL · Go · Supabase</p>
         </div>
       </div>
 
       <div className="project-detail-section">
         <h2 className="project-detail-section-title">Overview</h2>
         <p className="project-detail-body">
-          The Reboot 01 Student App centralizes academic progress into a single mobile
-          experience. It connects directly to the Reboot 01 API to deliver live updates,
-          reminders, and synchronized data so students always know what is due, what is next,
-          and how they are performing. The goal is to automate reminders, simplify tracking,
-          and make progress transparent across the entire program.
+          A mobile app for Reboot Coding Institute students to track audits, projects,
+          attendance, XP, and events — all in one place. Live data, push notifications,
+          and biometric lock.
         </p>
       </div>
 
       <div className="project-detail-section">
-        <h2 className="project-detail-section-title">Core Modules</h2>
+        <h2 className="project-detail-section-title">Problem</h2>
+        <p className="project-detail-body">
+          No dedicated mobile interface, and the web platform isn't designed for mobile.
+          Students had to jump between platforms to track audits, deadlines, and attendance.
+        </p>
+      </div>
+
+      <div className="project-detail-section">
+        <h2 className="project-detail-section-title">Core Features</h2>
         <ul className="project-detail-list">
-          <li>Authentication with secure, token-based sessions.</li>
-          <li>Dashboard with program details, status, and progress summaries.</li>
-          <li>Audits tracking with overdue, pending, and completed filters.</li>
-          <li>Projects list and detail pages with requirements and deadlines.</li>
-          <li>Timeline views (calendar + vertical) with dynamic due dates.</li>
-          <li>Push notifications for audits, deadlines, and campus events.</li>
-          <li>Attendance tracking integrated with the campus fingerprint check-in system.</li>
-          <li>Skills and profile pages showing milestones, levels, and student info.</li>
+          <li><strong>Dashboard</strong> — XP level, program status, current module, and upcoming deadlines.</li>
+          <li><strong>Audits</strong> — Track overdue, pending, and completed audits. Book audits in-app.</li>
+          <li><strong>Projects</strong> — Project list with requirements, deadlines, and status.</li>
+          <li><strong>Calendar & Timeline</strong> — Two schedule views with live due dates from the API.</li>
+          <li><strong>XP Activity</strong> — XP earned, skill progress, and milestones over time.</li>
+          <li><strong>Events</strong> — Campus events with notification opt-in per event.</li>
+          <li><strong>Attendance</strong> — Integrated with the campus fingerprint check-in system.</li>
+          <li><strong>Stipend Requests</strong> — Submit and track stipend requests.</li>
+          <li><strong>Push Notifications</strong> — Real-time alerts with per-category preferences.</li>
+          <li><strong>Notification Inbox</strong> — Persistent inbox for all past notifications.</li>
+          <li><strong>Biometric Lock</strong> — Face ID, Touch ID, or fingerprint app lock.</li>
         </ul>
       </div>
 
       <div className="project-detail-section">
         <h2 className="project-detail-section-title">Tech Stack</h2>
         <ul className="project-detail-list">
-          <li>React Native + Expo + TypeScript for the mobile client.</li>
-          <li>Go-based RESTful API for middleware logic and data processing.</li>
-          <li>GraphQL integration with the Reboot 01 API.</li>
-          <li>Supabase for caching and user-specific data.</li>
-          <li>Expo Push Notifications for real-time alerts.</li>
+          <li>React Native + Expo + TypeScript</li>
+          <li>Expo Router</li>
+          <li>GraphQL</li>
+          <li>Go</li>
+          <li>Supabase</li>
+          <li>Expo Push Notifications</li>
         </ul>
       </div>
 
       <div className="project-detail-section">
-        <h2 className="project-detail-section-title">Quality Goals</h2>
+        <h2 className="project-detail-section-title">Design System</h2>
+        <p className="project-detail-body">
+          4 themes — Dark, Dim, Light, and Fun. Custom typography, configurable accent colors,
+          and adjustable font scale.
+        </p>
+      </div>
+
+      <div className="project-detail-section">
+        <h2 className="project-detail-section-title">Security</h2>
         <ul className="project-detail-list">
-          <li>Security via encrypted API communication and token-based auth.</li>
-          <li>Performance with optimized queries and real-time synchronization.</li>
-          <li>Reliability through accurate, automated data syncing.</li>
-          <li>UX that is clear, responsive, and built for fast scanning.</li>
-          <li>Planned enhancement: dark mode.</li>
+          <li>JWT in platform-native secure storage.</li>
+          <li>Biometric app lock.</li>
+          <li>Auto sign-out on 401.</li>
+          <li>No hardcoded secrets.</li>
         </ul>
       </div>
 
