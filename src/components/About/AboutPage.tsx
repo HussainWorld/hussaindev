@@ -12,6 +12,7 @@ function AboutPage() {
         {/* <div className="about-avatar">
           <img src={pfp} alt="Hussain Nader" className="about-avatar-img" />
         </div> */}
+        
         <p className="about-kicker">About</p>
         <h1 className="about-title">Hussain Nader</h1>
         <p className="about-subtitle">Software Engineer | Mobile App Developer</p>
