@@ -70,6 +70,15 @@
   gap: 12px;
 }
 
+.project-detail-logo--sm {
+  width: 30px;
+  height: 30px;
+}
+
+.project-detail-title--long {
+  font-size: 16px;
+}
+
 .project-detail-logo {
   width: 40px;
   height: 40px;

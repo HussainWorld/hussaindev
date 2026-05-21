@@ -6,6 +6,8 @@ import Home from './Home/Home'
 import NavBar, { type NavTab } from './Nav/NavBar'
 import ProjectsPage from './Projects/ProjectsPage'
 import Reboot01ProjectDetail from './Projects/ProjectDetails/Reboot01/Reboot01ProjectDetail'
+import RebootSISProjectDetail from './Projects/ProjectDetails/RebootSIS/RebootSISProjectDetail'
+import TimelineServiceProjectDetail from './Projects/ProjectDetails/TimelineService/TimelineServiceProjectDetail'
 import PortfolioProjectDetail from './Projects/ProjectDetails/PortfolioExperience/PortfolioProjectDetail'
 import type { ProjectId } from './Projects/projectsData'
 
@@ -33,6 +35,10 @@ function IPhoneScreen() {
       <div className="portfolio-content">
         {selectedProjectId === 'reboot01-mobile-app' ? (
           <Reboot01ProjectDetail onBack={handleProjectBack} portalTarget={portalRef.current} />
+        ) : selectedProjectId === 'reboot-sis' ? (
+          <RebootSISProjectDetail onBack={handleProjectBack} />
+        ) : selectedProjectId === 'reboot-backend-service' ? (
+          <TimelineServiceProjectDetail onBack={handleProjectBack} />
         ) : selectedProjectId === 'portfolio-experience' ? (
           <PortfolioProjectDetail onBack={handleProjectBack} />
         ) : activeTab === 'about' ? (

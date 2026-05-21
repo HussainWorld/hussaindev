@@ -36,7 +36,13 @@ function ProjectsPage({ onSelectProject }: ProjectsPageProps) {
             ) : null}
             <div className="project-content">
               <p className="project-tag">{project.tag}</p>
-              <h2 className="project-title">{project.title}</h2>
+              <h2 className="project-title">
+                {project.cardTitle
+                  ? project.cardTitle.map((line, i) => (
+                      <span key={i} style={{ display: 'block' }}>{line}</span>
+                    ))
+                  : project.title}
+              </h2>
               <p className="project-body">{project.summary}</p>
               <div className="project-meta">
                 <span className="project-stack-label">Stack</span>

@@ -11,6 +11,19 @@ import React from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 import cvPdf from '../../assets/Hussain Nader - Software Engineer - CV.pdf';
 
+async function downloadCV() {
+  const response = await fetch(cvPdf)
+  const blob = await response.blob()
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'Hussain Nader - Software Engineer - CV.pdf'
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
+}
+
 function ContactPage() {
   const [state, handleSubmit, reset] = useForm("xpqqzgzv");
   const [showToast, setShowToast] = React.useState(false);
@@ -137,14 +150,14 @@ function ContactPage() {
             <p className="contact-card-label">CV</p>
             <p className="contact-card-meta">PDF resume</p>
           </div>
-          <a
+          <button
+            type="button"
             className="contact-card-action"
-            href={cvPdf}
-            download="Hussain Nader - Software Engineer - CV.pdf"
+            onClick={downloadCV}
           >
             <IoDownloadOutline aria-hidden="true" />
             Download
-          </a>
+          </button>
         </div>
 
 

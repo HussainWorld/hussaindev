@@ -154,6 +154,8 @@
 .contact-card-body {
   display: grid;
   gap: 4px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .contact-card-label {
@@ -177,8 +179,11 @@
   font-weight: 600;
   color: var(--text);
   text-decoration: none;
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
+  display: block;
+  max-width: 100%;
 }
 
 .contact-card-link:hover {

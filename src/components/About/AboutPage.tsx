@@ -107,7 +107,7 @@ function AboutPage() {
         <div className="about-projects">
           <article className="about-project-card">
             <p className="about-project-kicker">Mobile - Live</p>
-            <h3 className="about-project-title">Reboot Coding Institute</h3>
+            <h3 className="about-project-title">Reboot Coding Institute Mobile App</h3>
             <p className="about-project-body">
               React Native, GraphQL, Supabase, Go backend service.
             </p>

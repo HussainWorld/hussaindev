@@ -151,11 +151,8 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
     <section className="project-detail reboot01-detail">
       <header className="project-detail-header">
         <div className="project-detail-heading">
-          <img src={reboot01Logo} alt="Reboot01 logo" className="project-detail-logo" />
-          <div>
-            {/* <p className="project-detail-tag">Mobile - In Progress</p> */}
-            <h1 className="project-detail-title">Reboot Coding Institute</h1>
-          </div>
+          <img src={reboot01Logo} alt="Reboot01 logo" className="project-detail-logo project-detail-logo--sm" />
+          <h1 className="project-detail-title project-detail-title--long">Reboot Coding Institute Mobile App</h1>
         </div>
         <p className="project-detail-summary">
           Mobile companion for Reboot01 students to track projects, audits, attendance, and
@@ -326,16 +323,6 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
           4 themes — Dark, Dim, Light, and Fun. Custom typography, configurable accent colors,
           and adjustable font scale.
         </p>
-      </div>
-
-      <div className="project-detail-section">
-        <h2 className="project-detail-section-title">Security</h2>
-        <ul className="project-detail-list">
-          <li>JWT in platform-native secure storage.</li>
-          <li>Biometric app lock.</li>
-          <li>Auto sign-out on 401.</li>
-          <li>No hardcoded secrets.</li>
-        </ul>
       </div>
 
       <button type="button" className="project-detail-back" onClick={onBack}>
