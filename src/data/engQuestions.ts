@@ -2,6 +2,7 @@ export interface Question {
   id: string;
   title: string;
   solution: string;
+  altSolutions?: string[];
   categories: string[];
 }
 
@@ -394,6 +395,9 @@ export const questions: Question[] = [
     "id": "js-zoo-race",
     "title": "js-zoo-race",
     "solution": "let __zooVirtualOffset = 0;\nlet __zooOriginalNow = Date.now;\nif (!Date.__zooPatched) {\n  Date.now = function () {\n    return __zooOriginalNow.call(Date) + __zooVirtualOffset;\n  };\n  Date.__zooPatched = true;\n}\n\nfunction animal(name, maxSpeed, maxSpeedRange, midSpeed, midSpeedRange, slowSpeed, distance) {\n  let seconds;\n  if (distance <= maxSpeedRange) {\n    seconds = distance / maxSpeed;\n  } else if (distance <= maxSpeedRange + midSpeedRange) {\n    seconds = maxSpeedRange / maxSpeed + (distance - maxSpeedRange) / midSpeed;\n  } else {\n    seconds = maxSpeedRange / maxSpeed + midSpeedRange / midSpeed + (distance - maxSpeedRange - midSpeedRange) / slowSpeed;\n  }\n\n  if (name === \"Rabbit\" && distance === 200) return new Promise(() => {});\n\n  const virtualMs = seconds * 1000;\n  const realDelay = Math.min(Math.max(virtualMs, 0), 20);\n  return new Promise((resolve) => {\n    setTimeout(() => {\n      __zooVirtualOffset += Math.max(virtualMs - realDelay, 0);\n      resolve(name);\n    }, realDelay);\n  });\n}\n\nfunction zooRace(animals) {\n  if (!animals.length) return Promise.reject(new Error(\"No animals\"));\n  return Promise.race(animals);\n}",
+    "altSolutions": [
+      "function animal(name, maxSpeed, maxSpeedRange, midSpeed, midSpeedRange, speed, distance) {\n  let time;\n\n  if (distance <= maxSpeedRange) {\n    time = distance / maxSpeed;\n  } else if (distance <= maxSpeedRange + midSpeedRange) {\n    time = (maxSpeedRange / maxSpeed) + ((distance - maxSpeedRange) / midSpeed);\n  } else {\n    time = (maxSpeedRange / maxSpeed) + (midSpeedRange / midSpeed) + ((distance - maxSpeedRange - midSpeedRange) / speed);\n  }\n\n  return new Promise((resolve) => {\n    setTimeout(() => resolve(name), time * 1000);\n  });\n}\n\nfunction zooRace(animals) {\n  if (!animals.length) return Promise.reject(new Error(\"No animals\"));\n  return Promise.race(animals);\n}"
+    ],
     "categories": [
       "all_questions_answers",
       "checkpoint_final_answers",

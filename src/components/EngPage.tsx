@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { questions, CATEGORIES, CATEGORY_LABELS } from '../data/engQuestions'
 import './EngPage.css'
 
@@ -6,6 +6,9 @@ export default function EngPage() {
   const [activeCategory, setActiveCategory] = useState('all_questions_answers')
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [search, setSearch] = useState('')
+  const [solutionTab, setSolutionTab] = useState(0)
+
+  useEffect(() => { setSolutionTab(0) }, [selectedId])
 
   const formatTitle = (id: string) =>
     id.replace(/^js-/, '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
@@ -41,15 +44,22 @@ export default function EngPage() {
   return (
     <div className="eng-layout">
       <aside className="eng-sidebar">
-        <input
-          className="eng-search"
-          type="text"
-          placeholder="Search questions..."
-          value={search}
-          onChange={e => handleSearch(e.target.value)}
-          autoComplete="off"
-          spellCheck={false}
-        />
+        <div className="eng-search-wrap">
+          <input
+            className="eng-search"
+            type="text"
+            placeholder="Search questions..."
+            value={search}
+            onChange={e => handleSearch(e.target.value)}
+            autoComplete="off"
+            spellCheck={false}
+          />
+          {search && (
+            <button className="eng-search-clear" onClick={() => setSearch('')} aria-label="Clear search">
+              ×
+            </button>
+          )}
+        </div>
         <p className="eng-sidebar-heading">Categories</p>
         <ul className="eng-category-list">
           {CATEGORIES.map(cat => (
@@ -85,7 +95,32 @@ export default function EngPage() {
           {selected ? (
             <>
               <h2 className="eng-solution-title">{formatTitle(selected.id)}</h2>
-              <pre className="eng-code-block"><code>{selected.solution}</code></pre>
+              {selected.altSolutions && selected.altSolutions.length > 0 && (
+                <div className="eng-tabs">
+                  <button
+                    className={`eng-tab${solutionTab === 0 ? ' active' : ''}`}
+                    onClick={() => setSolutionTab(0)}
+                  >
+                    Solution 1
+                  </button>
+                  {selected.altSolutions.map((_, i) => (
+                    <button
+                      key={i}
+                      className={`eng-tab${solutionTab === i + 1 ? ' active' : ''}`}
+                      onClick={() => setSolutionTab(i + 1)}
+                    >
+                      Solution {i + 2}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <pre className="eng-code-block">
+                <code>
+                  {solutionTab === 0
+                    ? selected.solution
+                    : selected.altSolutions![solutionTab - 1]}
+                </code>
+              </pre>
             </>
           ) : (
             <p className="eng-placeholder">Select a question to see the solution</p>
