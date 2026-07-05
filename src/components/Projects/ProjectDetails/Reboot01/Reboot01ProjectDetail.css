@@ -10,7 +10,14 @@
   min-width: 0;
 }
 
+.project-detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .project-detail-link {
+  flex: 1 1 200px;
   display: flex;
   align-items: center;
   justify-content: center;

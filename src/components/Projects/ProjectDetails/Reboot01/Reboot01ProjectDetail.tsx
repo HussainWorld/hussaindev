@@ -246,15 +246,33 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
           })()
         : null}
 
-      <a
-        href="https://play.google.com/store/apps/details?id=com.reboot01.students&pcampaignid=web_share"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="project-detail-link"
-      >
-        View on Google Play
-        <img src={googlePlayIcon} alt="" className="project-detail-link-icon" aria-hidden="true" />
-      </a>
+      <div className="project-detail-links">
+        <a
+          href="https://apps.apple.com/bh/app/reboot-coding-institute/id6781645014"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-detail-link"
+        >
+          View on App Store
+          <svg
+            className="project-detail-link-icon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M17.05 12.04c-.03-2.9 2.37-4.29 2.48-4.36-1.35-1.98-3.46-2.25-4.21-2.28-1.79-.18-3.5 1.05-4.41 1.05-.91 0-2.31-1.03-3.8-1-1.96.03-3.77 1.14-4.78 2.9-2.04 3.54-.52 8.78 1.46 11.65.97 1.4 2.12 2.98 3.63 2.92 1.46-.06 2.01-.94 3.77-.94 1.76 0 2.26.94 3.8.91 1.57-.03 2.56-1.43 3.52-2.84 1.11-1.63 1.57-3.21 1.6-3.29-.03-.02-3.06-1.18-3.09-4.67zM14.5 3.68c.8-.97 1.34-2.32 1.19-3.68-1.15.05-2.55.77-3.38 1.74-.74.86-1.39 2.24-1.22 3.56 1.29.1 2.6-.65 3.41-1.62z" />
+          </svg>
+        </a>
+        <a
+          href="https://play.google.com/store/apps/details?id=com.reboot01.students&pcampaignid=web_share"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="project-detail-link"
+        >
+          View on Google Play
+          <img src={googlePlayIcon} alt="" className="project-detail-link-icon" aria-hidden="true" />
+        </a>
+      </div>
 
       <div className="project-detail-grid">
         <div className="project-detail-card">
@@ -263,7 +281,7 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
         </div>
         <div className="project-detail-card">
           <p className="project-detail-card-label">Status</p>
-          <p className="project-detail-card-body">Live on Google Play</p>
+          <p className="project-detail-card-body">Live on App Store &amp; Google Play</p>
         </div>
         <div className="project-detail-card">
           <p className="project-detail-card-label">Stack</p>

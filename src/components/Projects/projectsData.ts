@@ -21,13 +21,13 @@ export const projects: Project[] = [
     tag: 'Mobile - Live',
     title: 'Reboot Coding Institute Mobile App',
     cardTitle: ['Reboot Coding Institute', 'Mobile App'],
-    summary: 'Mobile app for Reboot Coding Institute students. Live data, push notifications, audit booking, and more. Live on Google Play.',
+    summary: 'Mobile app for Reboot Coding Institute students. Live data, push notifications, audit booking, and more. Live on Google Play and the App Store.',
     stack: 'React Native, GraphQL, Supabase, Go',
     description:
       'A real-world mobile app focused on reliable data flows, scalable APIs, and a smooth user experience.',
     outcomes: [
       'Shipped to production with a full GraphQL data layer and Go backend service.',
-      'Live on Google Play with real users across the Reboot01 student community.',
+      'Live on Google Play and the App Store with real users across the Reboot01 student community.',
     ],
     image: reboot01MobileApp,
     imageAlt: 'Reboot01 mobile app screenshot',
