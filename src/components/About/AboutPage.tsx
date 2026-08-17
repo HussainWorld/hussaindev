@@ -1,5 +1,6 @@
 import './AboutPage.css'
 // import pfp from '../../assets/mePFP.png'
+import afsLogo from '../../assets/afsLogo.png'
 import bahrainPolytechnicLogo from '../../assets/BahrainPolytechnicLogo.png'
 import generalAssemblyLogo from '../../assets/generalAssemblyLogo.svg'
 import reboot01Logo from '../../assets/reboot01Logo.png'
@@ -38,6 +39,20 @@ function AboutPage() {
       <div className="about-section">
         <h2 className="about-section-title">Experience</h2>
         <ol className="about-timeline">
+          <li className="about-timeline-item">
+            <div className="about-timeline-heading">
+              <img src={afsLogo} alt="Arab Financial Services logo" className="about-logo" />
+              <p className="about-timeline-role">
+                Arab Financial Services <tr/> IT Trainee, IT Acquiring
+              </p>
+            </div>
+            <p className="about-timeline-body">
+              Hands-on experience in fintech, payment systems, and enterprise IT operations
+              within the IT Acquiring team.
+            </p>
+            <p className="about-timeline-meta">Jul 2026 — Present</p>
+          </li>
+
           <li className="about-timeline-item">
             <div className="about-timeline-heading">
               <img src={reboot01Logo} alt="Reboot01 logo" className="about-logo" />
@@ -82,7 +97,7 @@ function AboutPage() {
             <p className="about-timeline-body">
               Bachelor Degree in Programming
             </p>
-            <p className="about-timeline-meta">Expected May 2026</p>
+            <p className="about-timeline-meta">Expected Aug 2026</p>
           </li>
 
           <li className="about-timeline-item">
@@ -95,7 +110,7 @@ function AboutPage() {
             <p className="about-timeline-body">
               Project-based full-stack program focused on real-world projects.
             </p>
-            <p className="about-timeline-meta">Expected Aug 2025 - Aug 2027</p>
+            <p className="about-timeline-meta">Aug 2025 - Aug 2027</p>
           </li>
 
         </ol>

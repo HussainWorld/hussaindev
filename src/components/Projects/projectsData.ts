@@ -1,6 +1,13 @@
 import reboot01MobileApp from '../../assets/reboot01MobileApp.png'
+import hamoorStore from '../../assets/hamoorStore.jpg'
 
-export type ProjectId = 'reboot01-mobile-app' | 'reboot-sis' | 'reboot-backend-service' | 'portfolio-experience'
+export type ProjectId =
+  | 'reboot01-mobile-app'
+  | 'hamoor-store'
+  | 'life-os'
+  | 'reboot-sis'
+  | 'reboot-backend-service'
+  | 'portfolio-experience'
 
 export type Project = {
   id: ProjectId
@@ -33,10 +40,42 @@ export const projects: Project[] = [
     imageAlt: 'Reboot01 mobile app screenshot',
   },
   {
+    id: 'hamoor-store',
+    tag: 'E-commerce - Live',
+    title: 'Hamoor Store',
+    cardTitle: ['Hamoor', 'E-commerce Store'],
+    summary:
+      'Self-hosted e-commerce store for a Bahraini board game. Catalog, checkout, and admin dashboard — built and deployed solo.',
+    stack: 'Next.js, TypeScript, PostgreSQL, Drizzle, Docker',
+    description:
+      'A production storefront built from scratch, running on my own server.',
+    outcomes: [
+      'Built and deployed single-handedly — app, server, and domain.',
+      'Server-side pricing and atomic stock updates.',
+    ],
+    image: hamoorStore,
+    imageAlt: 'Hamoor board game product photo',
+  },
+  {
+    id: 'life-os',
+    tag: 'AI - Self-Hosted',
+    title: 'LifeOS',
+    cardTitle: ['LifeOS', 'AI Life Dashboard'],
+    summary:
+      'Personal life dashboard with an AI assistant that acts on my data. Tasks, goals, nutrition, and training — built and self-hosted solo.',
+    stack: 'Next.js, Go, Python, PostgreSQL, Gemini',
+    description:
+      'A multi-service platform where an AI agent reads and writes real application data.',
+    outcomes: [
+      'Four services in three languages, self-hosted with Docker.',
+      'AI agent with 17 typed tools that create and update real records.',
+    ],
+  },
+  {
     id: 'reboot-sis',
     tag: 'Web - Live',
     title: 'Reboot SIS',
-    summary: 'Internal Student Information System for Reboot Coding Institute. Cohort management, attendance, document requests, and a Gantt timeline — all in one dashboard.',
+    summary: 'Internal Student Information System for Reboot Coding Institute. Cohort management, attendance, document requests, a Gantt timeline, and Aski — a built-in AI assistant.',
     stack: 'Next.js, TypeScript, Go, GraphQL, Prisma',
     description:
       'Full-stack web app bridging a Go backend, school GraphQL API, and BioTime attendance system for staff and students.',

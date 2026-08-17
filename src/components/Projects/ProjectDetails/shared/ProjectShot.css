@@ -1,0 +1,261 @@
+.project-shot {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.project-shot-button {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b0f14;
+  font: inherit;
+  color: inherit;
+  cursor: zoom-in;
+  line-height: 0;
+}
+
+.project-shot-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.project-shot-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.project-shot-button:hover .project-shot-img,
+.project-shot-button:focus-visible .project-shot-img {
+  transform: scale(1.02);
+}
+
+.project-shot-hint-pill {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.78);
+  color: #f8fafc;
+  border: 1px solid rgba(248, 250, 252, 0.3);
+}
+
+.project-shot-caption {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* --- Full screen preview --- */
+
+.project-shot-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  /* Top padding clears the phone notch: the overlay is positioned against the
+     device body, so it does not inherit .portfolio-screen's padding-top. */
+  padding: 58px 12px 16px;
+  background: #0a0e14;
+  animation: project-shot-fade 0.2s ease;
+}
+
+@keyframes project-shot-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.project-shot-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+
+.project-shot-bar-title {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-shot-close {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 250, 252, 0.28);
+  background: rgba(248, 250, 252, 0.08);
+  color: #f8fafc;
+  cursor: pointer;
+}
+
+.project-shot-close:hover {
+  background: rgba(248, 250, 252, 0.16);
+}
+
+.project-shot-close:focus-visible {
+  outline: 2px solid #f8fafc;
+  outline-offset: 2px;
+}
+
+/* Grid + `margin: auto` on the child is the centering that stays reachable
+   once the image overflows; centering via place-items clips the scroll start. */
+.project-shot-stage {
+  display: grid;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 10px;
+}
+
+.project-shot-full {
+  margin: auto;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  cursor: zoom-in;
+}
+
+.project-shot-stage.is-zoomed {
+  cursor: grab;
+}
+
+.project-shot-stage.is-zoomed .project-shot-full {
+  /* Wide dashboard on a narrow screen: blow it up and let the stage scroll. */
+  width: 320%;
+  max-width: none;
+  max-height: none;
+  cursor: zoom-out;
+}
+
+.project-shot-hint {
+  margin: 0;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.4;
+  color: rgba(203, 213, 225, 0.85);
+}
+
+@media (min-width: 480px) {
+  .project-shot-lightbox {
+    padding: 58px 16px 18px;
+    gap: 12px;
+  }
+
+  .project-shot-stage.is-zoomed .project-shot-full {
+    width: 240%;
+  }
+}
+
+/* Roomy screens: the image already fits, so cap it rather than stretch it. */
+@media (min-width: 900px) {
+  .project-shot-lightbox {
+    padding: 58px 24px 24px;
+  }
+
+  .project-shot-full {
+    max-width: min(100%, 1600px);
+  }
+
+  .project-shot-stage.is-zoomed .project-shot-full {
+    width: 160%;
+  }
+}
+
+/* Short and wide (landscape phone): give the image the vertical room. */
+@media (max-height: 420px) {
+  .project-shot-lightbox {
+    padding: 44px 10px 8px;
+    gap: 6px;
+  }
+
+  .project-shot-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-shot-lightbox {
+    animation: none;
+  }
+
+  .project-shot-img {
+    transition: none;
+  }
+
+  .project-shot-button:hover .project-shot-img,
+  .project-shot-button:focus-visible .project-shot-img {
+    transform: none;
+  }
+}
+
+/* --- Hosting callout ------------------------------------------------------ */
+
+.project-hosting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--md-accent-border, rgba(167, 139, 250, 0.28));
+  background: var(--md-accent-dim, rgba(167, 139, 250, 0.12));
+}
+
+.project-hosting-icon {
+  flex-shrink: 0;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.project-hosting-text {
+  margin: 0;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.project-hosting-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--md-accent-text, #c4b5fd);
+  margin-bottom: 2px;
+}

@@ -1,4 +1,4 @@
-import { type PointerEvent, useEffect, useId, useRef, useState } from 'react'
+import { type PointerEvent, useCallback, useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import './Reboot01ProjectDetail.css'
 import reboot01MobileApp from '../../../../assets/reboot01MobileApp.png'
@@ -42,10 +42,31 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
   const previewImages = screenshotSources.length > 1 ? screenshotSources.slice(1) : [reboot01MobileApp]
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
-  const [dragOffset, setDragOffset] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const lightboxId = useId()
   const dragStartRef = useRef<{ x: number; y: number } | null>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
+  // The drag is driven straight onto the DOM node instead of through state:
+  // a mouse can emit several moves per frame, and re-rendering ten slides on
+  // each one is what made dragging feel heavy.
+  const dragOffsetRef = useRef(0)
+  const frameRef = useRef<number | null>(null)
+  const axisRef = useRef<'undecided' | 'x' | 'y'>('undecided')
+  const activeIndexRef = useRef(0)
+  const slideCount = previewImages.length
+
+  useEffect(() => {
+    activeIndexRef.current = activeIndex
+  }, [activeIndex])
+
+  const goToNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % slideCount)
+  }, [slideCount])
+
+  const goToPrevious = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + slideCount) % slideCount)
+  }, [slideCount])
 
   useEffect(() => {
     if (!isPreviewOpen) {
@@ -55,9 +76,20 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsPreviewOpen(false)
-        setDragOffset(0)
         setIsDragging(false)
         dragStartRef.current = null
+        return
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault()
+        goToNext()
+        return
+      }
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault()
+        goToPrevious()
       }
     }
 
@@ -69,18 +101,83 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
       document.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = previousOverflow
     }
-  }, [isPreviewOpen])
+  }, [isPreviewOpen, goToNext, goToPrevious])
+
+  // Trackpad and horizontal-wheel swiping — the gesture a laptop actually
+  // makes. It arrives as wheel events, which a pointer-drag handler never sees.
+  useEffect(() => {
+    const carousel = carouselRef.current
+    if (!isPreviewOpen || !carousel) {
+      return
+    }
+
+    let settling = false
+
+    const handleWheel = (event: WheelEvent) => {
+      if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) {
+        return
+      }
+
+      event.preventDefault()
+
+      if (settling || Math.abs(event.deltaX) < 12) {
+        return
+      }
+
+      settling = true
+      window.setTimeout(() => {
+        settling = false
+      }, 320)
+
+      if (event.deltaX > 0) {
+        goToNext()
+      } else {
+        goToPrevious()
+      }
+    }
+
+    carousel.addEventListener('wheel', handleWheel, { passive: false })
+    return () => carousel.removeEventListener('wheel', handleWheel)
+  }, [isPreviewOpen, goToNext, goToPrevious])
+
+  // Owns the track's transform whenever a drag is not in progress, so the
+  // snap-back and the slide change both animate through the CSS transition.
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track || isDragging) {
+      return
+    }
+
+    track.style.transform = `translateX(${-activeIndex * 100}%)`
+  }, [activeIndex, isDragging, isPreviewOpen])
+
+  useEffect(() => {
+    return () => {
+      if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current)
+      }
+    }
+  }, [])
 
   const handlePreviewOpen = () => {
     setActiveIndex(0)
     setIsPreviewOpen(true)
   }
 
+  const endDrag = () => {
+    if (frameRef.current !== null) {
+      cancelAnimationFrame(frameRef.current)
+      frameRef.current = null
+    }
+    dragStartRef.current = null
+    dragOffsetRef.current = 0
+    axisRef.current = 'undecided'
+  }
+
   const closePreview = () => {
     setIsPreviewOpen(false)
-    setDragOffset(0)
     setIsDragging(false)
-    dragStartRef.current = null
+    endDrag()
   }
 
   const handleCarouselPointerDown = (event: PointerEvent<HTMLDivElement>) => {
@@ -90,25 +187,52 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
 
     event.currentTarget.setPointerCapture(event.pointerId)
     dragStartRef.current = { x: event.clientX, y: event.clientY }
+    dragOffsetRef.current = 0
+    axisRef.current = 'undecided'
     setIsDragging(true)
-    setDragOffset(0)
   }
 
   const handleCarouselPointerMove = (event: PointerEvent<HTMLDivElement>) => {
-    if (!dragStartRef.current) {
+    const start = dragStartRef.current
+    if (!start) {
       return
     }
 
-    const deltaX = event.clientX - dragStartRef.current.x
-    const deltaY = event.clientY - dragStartRef.current.y
+    const deltaX = event.clientX - start.x
+    const deltaY = event.clientY - start.y
 
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      setDragOffset(deltaX)
+    // Decide the axis once, at the start. Comparing the two on every move let a
+    // little vertical wobble mid-drag freeze the slide until the pointer came
+    // back — which read as the drag stuttering.
+    if (axisRef.current === 'undecided') {
+      if (Math.abs(deltaX) < 6 && Math.abs(deltaY) < 6) {
+        return
+      }
+      axisRef.current = Math.abs(deltaX) >= Math.abs(deltaY) ? 'x' : 'y'
+    }
+
+    if (axisRef.current !== 'x') {
+      return
+    }
+
+    dragOffsetRef.current = deltaX
+
+    if (frameRef.current === null) {
+      frameRef.current = requestAnimationFrame(() => {
+        frameRef.current = null
+        const track = trackRef.current
+        if (track) {
+          track.style.transform = `translateX(calc(${-activeIndexRef.current * 100}% + ${
+            dragOffsetRef.current
+          }px))`
+        }
+      })
     }
   }
 
   const handleCarouselPointerEnd = (event: PointerEvent<HTMLDivElement>) => {
-    if (!dragStartRef.current) {
+    const start = dragStartRef.current
+    if (!start) {
       return
     }
 
@@ -116,35 +240,35 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
       event.currentTarget.releasePointerCapture(event.pointerId)
     }
 
-    const deltaX = event.clientX - dragStartRef.current.x
-    const deltaY = event.clientY - dragStartRef.current.y
+    const deltaX = event.clientX - start.x
+    const deltaY = event.clientY - start.y
+    const axis = axisRef.current
 
-    dragStartRef.current = null
+    endDrag()
     setIsDragging(false)
 
-    const swipeThreshold = 50
-    const tapThreshold = 10
+    // Proportional to the carousel, so the same flick works at any width.
+    const width = carouselRef.current?.clientWidth ?? 320
+    const swipeThreshold = Math.max(36, width * 0.16)
+    const tapThreshold = 8
 
-    if (Math.abs(deltaX) > swipeThreshold && Math.abs(deltaX) > Math.abs(deltaY)) {
+    if (axis === 'x' && Math.abs(deltaX) > swipeThreshold) {
       if (deltaX < 0) {
-        setActiveIndex((prev) => (prev + 1) % previewImages.length)
+        goToNext()
       } else {
-        setActiveIndex((prev) => (prev - 1 + previewImages.length) % previewImages.length)
+        goToPrevious()
       }
     } else if (Math.abs(deltaX) < tapThreshold && Math.abs(deltaY) < tapThreshold) {
       closePreview()
     }
-
-    setDragOffset(0)
   }
 
   const handleCarouselPointerCancel = (event: PointerEvent<HTMLDivElement>) => {
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId)
     }
-    dragStartRef.current = null
+    endDrag()
     setIsDragging(false)
-    setDragOffset(0)
   }
 
   return (
@@ -192,6 +316,7 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
                 onClick={closePreview}
               >
                 <div
+                  ref={carouselRef}
                   className="project-detail-lightbox-carousel"
                   onPointerDown={handleCarouselPointerDown}
                   onPointerMove={handleCarouselPointerMove}
@@ -200,11 +325,33 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
                   onClick={(event) => event.stopPropagation()}
                   aria-label="Reboot01 mobile app screenshots"
                 >
-                  <div
-                    className={`project-detail-lightbox-track${isDragging ? ' is-dragging' : ''}`}
-                    style={{
-                      transform: `translateX(calc(${-activeIndex * 100}% + ${dragOffset}px))`,
+                  <button
+                    type="button"
+                    className="project-detail-lightbox-arrow is-prev"
+                    onPointerDown={(event) => event.stopPropagation()}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      goToPrevious()
                     }}
+                    aria-label="Previous screenshot"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    className="project-detail-lightbox-arrow is-next"
+                    onPointerDown={(event) => event.stopPropagation()}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      goToNext()
+                    }}
+                    aria-label="Next screenshot"
+                  >
+                    ›
+                  </button>
+                  <div
+                    ref={trackRef}
+                    className={`project-detail-lightbox-track${isDragging ? ' is-dragging' : ''}`}
                   >
                     {previewImages.map((image, index) => (
                       <div className="project-detail-lightbox-slide" key={image}>
@@ -238,7 +385,7 @@ function Reboot01ProjectDetail({ onBack, portalTarget }: Reboot01ProjectDetailPr
                   </span>
                 </div>
                 <p className="project-detail-lightbox-hint" aria-hidden="true">
-                  Swipe to view more. Tap to close.
+                  Swipe, use ← →, or tap the arrows. Tap the image to close.
                 </p>
               </div>
             )
