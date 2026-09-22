@@ -26,9 +26,15 @@ export function useTheme() {
     localStorage.setItem(STORAGE_KEY, t)
 
     // Full-screen on a phone the browser chrome sits right against the app, so
-    // it has to take the app's surface colour rather than the page's.
-    const meta = document.querySelector('meta[name="theme-color"]')
-    meta?.setAttribute('content', t === 'dark' ? SURFACE_DARK : SURFACE_LIGHT)
+    // it has to take the app's surface colour rather than the page's. iOS Safari
+    // does not always repaint when the attribute is mutated in place, so swap
+    // the whole node to force it to re-read.
+    const old = document.querySelector('meta[name="theme-color"]')
+    const meta = document.createElement('meta')
+    meta.name = 'theme-color'
+    meta.content = t === 'dark' ? SURFACE_DARK : SURFACE_LIGHT
+    old?.remove()
+    document.head.appendChild(meta)
   }, [])
 
   useEffect(() => {

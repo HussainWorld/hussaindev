@@ -59,9 +59,17 @@
       rel="stylesheet"
     />
 
-    <!-- 🎨 Theme flash prevention -->
+    <!-- 🎨 Theme flash prevention — also sets theme-color before first paint.
+         iOS Safari paints the status bar and toolbar from theme-color and reads
+         it at parse time, so leaving it to React means white bars above and
+         below a dark app. -->
     <script>
-      (function(){var t=localStorage.getItem('theme-preference');if(!t)t='light';document.documentElement.setAttribute('data-theme',t)})();
+      (function(){
+        var t=localStorage.getItem('theme-preference');if(t!=='dark'&&t!=='light')t='light';
+        document.documentElement.setAttribute('data-theme',t);
+        var m=document.querySelector('meta[name="theme-color"]');
+        if(m)m.setAttribute('content',t==='dark'?'#131316':'#ffffff');
+      })();
     </script>
 
     <!-- 🎨 Base styles -->
