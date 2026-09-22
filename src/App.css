@@ -39,29 +39,36 @@
   position: relative;
 }
 
-@media (max-width: 900px) {
-  #root {
-    height: auto;
-    min-height: 100svh;
-    overflow: visible;
-  }
+/* ============================================
+   FULL-SCREEN APP SHELL (phones)
+   No mockup, no page chrome — the viewport is the phone.
+   ============================================ */
+.app-standalone {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--page-bg);
+}
 
-  .hero {
-    min-height: 100svh;
-    height: auto;
-    padding: 2.5rem 1.5rem 3rem;
-    overflow: visible;
+/* Fallback for browsers without dvh (older iOS Safari). */
+@supports not (height: 100dvh) {
+  .app-standalone {
+    height: 100vh;
+    height: -webkit-fill-available;
   }
+}
 
-  .wordmark {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    margin-bottom: 0.5rem;
-  }
+html[data-app-mode="fullscreen"],
+html[data-app-mode="fullscreen"] body {
+  height: 100%;
+  overflow: hidden;
+  /* No rubber-band / pull-to-refresh behind the app. */
+  overscroll-behavior: none;
+}
 
-  .device {
-    width: 100%;
-  }
+html[data-app-mode="fullscreen"] #root {
+  height: 100%;
+  overflow: hidden;
 }

@@ -4,6 +4,10 @@ type Theme = 'light' | 'dark'
 
 const STORAGE_KEY = 'theme-preference'
 
+/** Must match --md-surface in IPhoneScreen.css. */
+const SURFACE_LIGHT = '#ffffff'
+const SURFACE_DARK = '#131316'
+
 function getSystemTheme(): Theme {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
@@ -20,6 +24,11 @@ export function useTheme() {
   const applyTheme = useCallback((t: Theme) => {
     document.documentElement.setAttribute('data-theme', t)
     localStorage.setItem(STORAGE_KEY, t)
+
+    // Full-screen on a phone the browser chrome sits right against the app, so
+    // it has to take the app's surface colour rather than the page's.
+    const meta = document.querySelector('meta[name="theme-color"]')
+    meta?.setAttribute('content', t === 'dark' ? SURFACE_DARK : SURFACE_LIGHT)
   }, [])
 
   useEffect(() => {

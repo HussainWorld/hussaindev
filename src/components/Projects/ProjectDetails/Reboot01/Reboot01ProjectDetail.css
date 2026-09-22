@@ -24,7 +24,9 @@
   gap: 8px;
   border: 1px solid var(--primary);
   background: var(--primary);
-  color: #000;
+  /* --primary is near-black on the light palette, so the label has to follow
+     the palette too rather than being hardcoded black. */
+  color: var(--md-on-primary);
   padding: 10px 12px;
   border-radius: 999px;
   font-size: 11px;

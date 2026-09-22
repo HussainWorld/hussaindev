@@ -1,0 +1,84 @@
+/* ============================================
+   TOP APP BAR — full-screen (phone) mode only
+   ============================================ */
+
+.app-bar {
+  flex: none;
+  position: relative;
+  z-index: 20;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: var(--md-tabbar-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--md-outline-variant);
+}
+
+.app-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 8px;
+  padding-left: max(8px, env(safe-area-inset-left, 0px));
+  padding-right: max(8px, env(safe-area-inset-right, 0px));
+}
+
+.app-bar-title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--md-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-bar-btn {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--md-on-surface);
+  font-size: 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.app-bar-btn:hover {
+  border-color: transparent;
+  background: var(--md-surface-container-high);
+}
+
+.app-bar-btn:active {
+  transform: scale(0.9);
+  background: var(--md-surface-bright);
+}
+
+/* Invisible spacer that keeps the title optically centred. */
+.app-bar-btn-ghost {
+  pointer-events: none;
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-bar-btn {
+    transition: none;
+  }
+
+  .app-bar-btn:active {
+    transform: none;
+  }
+}

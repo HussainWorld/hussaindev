@@ -3,6 +3,7 @@
    Default: dark phone (for light page bg)
    ============================================ */
 
+/* --- Layout (shared by both presentations) --- */
 .portfolio-screen {
   width: 100%;
   height: 100%;
@@ -13,8 +14,16 @@
   flex-direction: column;
   overflow: hidden;
   transform: translateZ(0);
+  /* Clears the notch cut into the mockup PNG; the app bar replaces it when
+     running full-screen. */
   padding-top: 50px;
+}
 
+/* Inside the desktop mockup the phone inverts the page (light page -> dark phone).
+   Full-screen on a real phone there is no page behind it, so `.standalone` opts
+   out of the inversion and follows the chosen theme directly. */
+.portfolio-screen,
+[data-theme="dark"] .portfolio-screen.standalone {
   /* Dark phone palette (shown on light page) */
   --md-primary: #F5F5F7;
   --md-on-primary: #0A0A0A;
@@ -54,7 +63,8 @@
 /* ============================================
    Light phone palette (shown on dark page)
    ============================================ */
-[data-theme="dark"] .portfolio-screen {
+[data-theme="dark"] .portfolio-screen,
+.portfolio-screen.standalone {
   --md-primary: #111111;
   --md-on-primary: #FFFFFF;
   --md-primary-container: #F0F0F0;
@@ -228,5 +238,88 @@
   .portfolio-content {
     padding: 28px 24px 36px;
     gap: 28px;
+  }
+}
+
+/* ============================================
+   FULL-SCREEN APP SHELL (real phones)
+   The app bar owns the top safe area; the tab bar owns the bottom one.
+   ============================================ */
+.portfolio-screen.standalone {
+  height: 100%;
+  padding-top: 0;
+}
+
+.portfolio-screen.standalone .portfolio-content {
+  padding: 20px 16px 28px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  gap: 22px;
+  /* Keeps a bounce at the edges from scrolling the page behind the app. */
+  overscroll-behavior-y: contain;
+}
+
+.portfolio-screen.standalone .portfolio-tabbar {
+  padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(4%, env(safe-area-inset-left, 0px));
+  padding-right: max(4%, env(safe-area-inset-right, 0px));
+}
+
+/* Touch targets: Apple/Material both want ~48px minimum. */
+.portfolio-screen.standalone .tab-item {
+  padding: 10px 0 8px;
+  min-height: 52px;
+}
+
+.portfolio-screen.standalone .tab-item:active .tab-icon {
+  transform: scale(0.88);
+}
+
+.portfolio-screen.standalone .tab-icon {
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* iOS zooms the page in when a focused input is under 16px. */
+.portfolio-screen.standalone input,
+.portfolio-screen.standalone textarea,
+.portfolio-screen.standalone select {
+  font-size: 16px;
+  padding: 0.75rem 0.85rem;
+}
+
+/* Every tappable surface gets press feedback instead of a hover state. */
+.portfolio-screen.standalone button,
+.portfolio-screen.standalone a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-screen.standalone .tab-icon {
+    transition: none;
+  }
+
+  .portfolio-screen.standalone .tab-item:active .tab-icon {
+    transform: none;
+  }
+}
+
+/* Full-screen overlays are positioned against the shell (.portfolio-screen is a
+   containing block via translateZ), so they own the safe areas themselves. The
+   58px in ProjectShot.css was clearing the mockup's painted notch. */
+.portfolio-screen.standalone .project-shot-lightbox {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 14px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+}
+
+.portfolio-screen.standalone .project-detail-lightbox {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 18px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+}
+
+/* Tablets get the app shell too, but full-bleed text would run far too wide. */
+@media (min-width: 600px) {
+  .portfolio-screen.standalone .portfolio-content {
+    padding-left: max(24px, calc((100% - 560px) / 2));
+    padding-right: max(24px, calc((100% - 560px) / 2));
   }
 }

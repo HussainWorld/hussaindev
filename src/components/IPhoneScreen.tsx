@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import './IPhoneScreen.css'
 import AboutPage from './About/AboutPage'
 import ContactPage from './Contact/ContactPage'
@@ -12,8 +12,23 @@ import RebootSISProjectDetail from './Projects/ProjectDetails/RebootSIS/RebootSI
 import TimelineServiceProjectDetail from './Projects/ProjectDetails/TimelineService/TimelineServiceProjectDetail'
 import PortfolioProjectDetail from './Projects/ProjectDetails/PortfolioExperience/PortfolioProjectDetail'
 import type { ProjectId } from './Projects/projectsData'
+import AppBar from './AppBar/AppBar'
 
-function IPhoneScreen() {
+interface IPhoneScreenProps {
+  /** Running full-screen on a real phone rather than inside the desktop mockup. */
+  standalone?: boolean
+  theme?: 'light' | 'dark'
+  onToggleTheme?: () => void
+}
+
+const tabTitles: Record<NavTab, string> = {
+  home: 'hussaindev.com',
+  projects: 'Projects',
+  about: 'About',
+  contact: 'Contact',
+}
+
+function IPhoneScreen({ standalone = false, theme, onToggleTheme }: IPhoneScreenProps) {
   const [activeTab, setActiveTab] = useState<NavTab>('home')
   const [selectedProjectId, setSelectedProjectId] = useState<ProjectId | null>(null)
   const portalRef = useRef<HTMLDivElement>(null)
@@ -25,22 +40,54 @@ function IPhoneScreen() {
     contentRef.current?.scrollTo({ top: 0 })
   }, [activeTab, selectedProjectId])
 
+  // Full-screen on a phone, the system back gesture has to close the project
+  // detail instead of leaving the site — that is what makes it read as an app.
+  useEffect(() => {
+    if (!standalone) return
+    const handlePop = () => setSelectedProjectId(null)
+    window.addEventListener('popstate', handlePop)
+    return () => window.removeEventListener('popstate', handlePop)
+  }, [standalone])
+
+  /** Drops the history entry pushed when a project was opened, if there is one. */
+  const popProjectEntry = useCallback(() => {
+    if (standalone && window.history.state?.projectOpen) {
+      window.history.back()
+      return true
+    }
+    return false
+  }, [standalone])
+
   const handleTabChange = (tab: NavTab) => {
     setActiveTab(tab)
+    popProjectEntry()
     setSelectedProjectId(null)
   }
 
   const handleProjectOpen = (projectId: ProjectId) => {
     setSelectedProjectId(projectId)
     setActiveTab('projects')
+    if (standalone && !window.history.state?.projectOpen) {
+      window.history.pushState({ projectOpen: true }, '')
+    }
   }
 
   const handleProjectBack = () => {
-    setSelectedProjectId(null)
+    // popstate clears the selection; only do it here when nothing was pushed.
+    if (!popProjectEntry()) setSelectedProjectId(null)
   }
 
   return (
-    <div className="portfolio-screen">
+    <div className={`portfolio-screen${standalone ? ' standalone' : ''}`}>
+      {standalone && (
+        <AppBar
+          title={selectedProjectId ? 'Project' : tabTitles[activeTab]}
+          theme={theme}
+          onToggleTheme={onToggleTheme}
+          onBack={selectedProjectId ? handleProjectBack : undefined}
+        />
+      )}
+
       <div className="portfolio-content" ref={contentRef}>
         {selectedProjectId === 'reboot01-mobile-app' ? (
           <Reboot01ProjectDetail onBack={handleProjectBack} portalTarget={portalRef.current} />
