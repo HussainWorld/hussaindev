@@ -49,7 +49,7 @@
     <meta name="color-scheme" content="dark light" />
 
     <!-- Browser chrome matches the app surface; kept in sync by useTheme -->
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#131316" />
 
     <!-- 🧱 Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -65,7 +65,7 @@
          below a dark app. -->
     <script>
       (function(){
-        var t=localStorage.getItem('theme-preference');if(t!=='dark'&&t!=='light')t='light';
+        var t=localStorage.getItem('theme-preference');if(t!=='dark'&&t!=='light')t='dark';
         document.documentElement.setAttribute('data-theme',t);
         var m=document.querySelector('meta[name="theme-color"]');
         if(m)m.setAttribute('content',t==='dark'?'#131316':'#ffffff');
@@ -76,9 +76,13 @@
     <style>
       body {
         margin: 0;
+        background-color: #131316;
+        color: #e0e0e0;
+        font-family: "Inter", sans-serif;
+      }
+      [data-theme="light"] body {
         background-color: #ffffff;
         color: #213547;
-        font-family: "Inter", sans-serif;
       }
       [data-theme="dark"] body {
         background-color: #0f0f0f;

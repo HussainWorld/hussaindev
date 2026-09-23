@@ -15,7 +15,9 @@ function getSystemTheme(): Theme {
 function getInitialTheme(): Theme {
   const stored = localStorage.getItem(STORAGE_KEY)
   if (stored === 'light' || stored === 'dark') return stored
-  return 'light'
+  // Dark is the default for a first visit; the toggle still overrides it and
+  // the choice persists. Must match the pre-paint default in index.html.
+  return 'dark'
 }
 
 export function useTheme() {
